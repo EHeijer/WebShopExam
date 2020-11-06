@@ -1,0 +1,19 @@
+.order-confirm-container {
+	box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.4);
+	border-radius: 5px;
+	background: #fff;
+	max-width: 80%;
+	margin: auto;
+	padding: 0 2rem;
+}
+.orderline {
+	display: grid;
+	grid-template-columns: 15% 30% 30% 25%;
+}
+.orderline img {
+	width: 120px;
+	align-self: center;
+}
+.orderline-info {
+	align-self: center;
+}

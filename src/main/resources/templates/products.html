@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xlmns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Products</title>
+<link th:href = "@{/css/products.css}" rel="stylesheet">
+<script type="text/javascript" th:src= "@{/js/actions.js}"></script>
+<link th:href = "@{/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
+	<div class="products">
+	<h1>All Products</h1>
+		<a href="/shoppingcart">
+			<img class="cart-image" alt="" th:src="@{/images/shopping-cart-solid.png}">
+		</a>
+		
+		<div class="product-container">
+			<article class="product" th:each="product : ${products}">
+				<img alt="" th:src="@{${'images/' + product.imageUrl}}">
+				<div class="product-info">
+					<p th:text="${product.productName}" style="font-weight:bold;"></p>
+					<p th:text="${product.brand}"></p>
+				</div>
+				<div class="price-and-button">
+					<p th:text="${product.price} + ' kr'" style="font-weight:bold;"></p>
+					<a th:href="@{'/products/{productId}'(productId=${product.id})}">
+						<button class="btn btn-primary">Add To Cart</button>
+					</a>
+					
+				</div>
+			</article>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xlmns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link th:href="@{/css/shoppingcart.css}" rel="stylesheet">
+<script type="text/javascript" th:src="@{/js/actions.js}"></script>
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
+	<div class="cart">
+		<div class="cart-container">
+			<article class="cart-item" th:each="product : ${cart.entrySet()}">
+				<img alt="" th:src="@{${'images/' + product.getKey().imageUrl}}">
+				<div class="cart-item-info">
+					<p th:text="${product.getKey().productName}"
+						style="font-weight: bold;"></p>
+					<p th:text="${product.getKey().brand}"></p>
+				</div>
+			</article>
+		</div>
+		<div class="send-order">
+			<form action="#" th:action="@{/orderconfirm}" method="post">
+				<button type="submit" name="action" class="btn btn-primary">Send Order</button>
+			</form>
+		</div>
+
+	</div>
+</body>
+</html>

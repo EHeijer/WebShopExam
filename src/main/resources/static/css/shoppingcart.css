@@ -1,0 +1,28 @@
+.cart {
+	padding: 3rem;
+}
+.cart-container {
+	margin-top: 10rem;
+	padding: 2rem 2rem;
+	box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.4);
+	border-radius: 5px;
+	max-width: 80%;
+	margin: auto;
+}
+.cart-item {
+	display: grid;
+	grid-template-columns: 15% 30% 30% 25%;
+}
+.cart-item img {
+	width: 120px;
+	align-self: center;
+}
+.cart-item-info {
+	align-self: center;
+}
+
+.send-order {
+	display: flex;
+	justify-content: center;
+	padding: 2rem;
+}

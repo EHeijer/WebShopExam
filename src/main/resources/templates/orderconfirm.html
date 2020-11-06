@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xlmns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link th:href="@{/css/orderconfirm.css}" rel="stylesheet">
+<script type="text/javascript" th:src="@{/js/actions.js}"></script>
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
+	<h1>Order confirm</h1>
+	<div class="order-confirm-container">
+		<article class="orderline" th:each="orderLine : ${order.orderLines}">
+			<img alt="" th:src="@{${'images/' + orderLine.product.imageUrl}}">
+			<div class="orderline-info">
+				<p th:text="${orderLine.product.productName}"
+					style="font-weight: bold;"></p>
+				<p th:text="${orderLine.product.brand}"></p>
+			</div>
+		</article>
+	</div>
+</body>
+</html>
