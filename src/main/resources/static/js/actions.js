@@ -1,3 +1,4 @@
-function demo() {
-	alert("thymeleaf");
+function incrementQuantity(quantity) {
+	quantity++;
+	alert(quantity);
 }

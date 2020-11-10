@@ -1,10 +1,14 @@
+.order-confirm {
+	padding: 130px 3rem 3rem 3rem;
+	min-height: 90vh;
+}
 .order-confirm-container {
 	box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.4);
 	border-radius: 5px;
 	background: #fff;
 	max-width: 80%;
 	margin: auto;
-	padding: 0 2rem;
+	padding: 2rem 2rem;
 }
 .orderline {
 	display: grid;
@@ -16,4 +20,18 @@
 }
 .orderline-info {
 	align-self: center;
+}
+.orderline-info p {
+	margin: 0;
+}
+.sum-of-order {
+	display: flex;
+	flex-direction: row;
+	justify-content:center;
+	align-items: center;
+}
+.sum-of-order p {
+	font-weight: bold;
+	padding: 0 0.3rem;
+	font-size: 22px;
 }

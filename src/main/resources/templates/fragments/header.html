@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xlmns:th="http://www.thymeleaf.org">
+<head th:fragment="header-head">
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link th:href="@{/css/header.css}" rel="stylesheet">
+<script type="text/javascript" th:src="@{/js/actions.js}"></script>
+</head>
+<body>
+	<header th:fragment="header">
+        <div class="header-container">
+            <a href="/" class="title"><h1>SUPPLEMENT STORE</h1></a>
+            <ul class="product-list">
+                <li><a href="/products">ALL PRODUCTS</a></li>
+                <li><a href="/products/supplements">SUPPLEMENTS</a></li>
+                <li><a href="/products/clothes">CLOTHES</a></li>
+                <li><a href="/products/shoes">SHOES</a></li>
+            </ul>
+            <ul class="nav-list">
+                <a href="/shoppingcart" class="shopping-cart"> <img src="../images/shopping-cart-solid.png" alt=""><span class="cart-items-counter"></span><p>VARUKORG</p></a>
+                <a href="/login" class="log-in" ><img src="../images/user-solid.png" alt=""><p>LOGGA IN</p></a>
+                <a to="/profile" class="log-in" ><img src="../images/user-solid.png" alt=""><p>MITT KONTO</p></a>
+            </ul>
+        </div>
+    </header>
+</body>
+</html>

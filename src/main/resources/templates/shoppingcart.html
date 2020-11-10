@@ -6,8 +6,11 @@
 <link th:href="@{/css/shoppingcart.css}" rel="stylesheet">
 <script type="text/javascript" th:src="@{/js/actions.js}"></script>
 <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+<th:block th:include="fragments/header :: head"></th:block>
+<th:block th:include="fragments/footer :: head"></th:block>
 </head>
 <body>
+	<div th:insert="fragments/header :: header"></div>
 	<div class="cart">
 		<div class="cart-container">
 			<article class="cart-item" th:each="product : ${cart.entrySet()}">
@@ -17,14 +20,34 @@
 						style="font-weight: bold;"></p>
 					<p th:text="${product.getKey().brand}"></p>
 				</div>
+				<div class="quantity">
+					<div class="minus" @click="decrementQuantity()">
+						<img src="../images/minus-solid.svg" alt="">
+					</div>
+					<span class="number" th:text="${product.getValue()}"></span>
+					<a th:href="@{'/shoppingcart/products/{productId}'(productId=${product.getKey().id})}">
+					<div class="plus">
+						<img src="../images/plus-solid.svg" alt="">
+					</div>
+					</a>
+				</div>
+				<div class="total-item-price">
+					<p th:text="${product.getKey().price*product.getValue()} + KR"></p>
+				</div>
 			</article>
+			<div class="sum-of-cart">
+				<p>Sum:</p>
+				<p th:text="${cartSum} + KR"></p>
+			</div>
 		</div>
 		<div class="send-order">
 			<form action="#" th:action="@{/orderconfirm}" method="post">
-				<button type="submit" name="action" class="btn btn-primary">Send Order</button>
+				<button type="submit" name="action" class="btn btn-primary">Send
+					Order</button>
 			</form>
 		</div>
 
 	</div>
+	<div th:insert="fragments/footer :: footer"></div>
 </body>
 </html>

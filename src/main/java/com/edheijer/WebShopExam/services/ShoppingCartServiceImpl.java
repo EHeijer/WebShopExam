@@ -3,6 +3,7 @@ package com.edheijer.WebShopExam.services;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -68,8 +69,16 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
 	@Override
 	public double getCartSum() {
-		// TODO Auto-generated method stub
-		return 0;
+		double cartSum = 0;
+		for(Map.Entry<Product, Integer> entry : cart.entrySet()) {
+			double sumOfOrderLine = entry.getKey().getPrice() * entry.getValue();
+			cartSum = cartSum += sumOfOrderLine;
+		}
+		return cartSum;
+	}
+	
+	public void incrementQuantity(Product product) {
+		cart.replace(product, cart.get(product) + 1);
 	}
 
 }

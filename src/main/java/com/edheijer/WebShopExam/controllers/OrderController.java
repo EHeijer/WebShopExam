@@ -54,6 +54,7 @@ public class OrderController {
 		order.setOrderLines(orderLines);
 		ModelAndView modelAndView = new ModelAndView("/orderconfirm");
 		modelAndView.addObject("order", order);
+		modelAndView.addObject("orderSum", order.getTotalOrderPrice());
 		shoppingCartService.getProductsInCart().clear();
 		return modelAndView;
 		}

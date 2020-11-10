@@ -1,6 +1,8 @@
 package com.edheijer.WebShopExam.models;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,4 +26,7 @@ public class Product {
 	private Integer quantity;
 	private double price;
 	private String imageUrl;
+	
+	@Enumerated(EnumType.STRING)
+	private ProductCategory category;
 }
