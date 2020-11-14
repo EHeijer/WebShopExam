@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xlmns:th="http://www.thymeleaf.org"
+	xlmns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="ISO-8859-1">
+<title>Admin Profile</title>
+<link th:href="@{/css/profile.css}" rel="stylesheet">
+<script type="text/javascript" th:src="@{/js/actions.js}"></script>
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+<th:block th:include="fragments/header :: head"></th:block>
+<th:block th:include="fragments/footer :: head"></th:block>
+</head>
+<body>
+	<div th:insert="fragments/header :: header"></div>
+	
+	<div class="profile-container">
+		<div th:insert="fragments/header :: logout"></div>
+		<h1>Admin Profile</h1>
+	</div>
+
+	<div th:insert="fragments/footer :: footer"></div>
+</body>
+</html>

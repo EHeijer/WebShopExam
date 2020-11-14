@@ -24,7 +24,8 @@ header {
 }
 
 .product-list {
-	display: flex; list-style : none;
+	display: flex;
+	list-style: none;
 	color: #fff;
 	padding: 1rem 0 0 0;
 	justify-self: center;
@@ -57,6 +58,7 @@ header {
 .product-list li:nth-child(2) {
 	border-right: solid #fff 1px;
 }
+
 .product-list li:nth-child(3) {
 	border-right: solid #fff 1px;
 }
@@ -76,6 +78,26 @@ ul.nav-list {
 	font-weight: bold;
 }
 
+.nav-list form {
+	display: flex;
+	flex-direction: column;
+	cursor: pointer;
+	align-items: center;
+}
+
+.nav-list form input {
+	background: inherit;
+	border-style: none;
+	color: #fff;
+	font-weight: bold;
+	cursor: pointer;
+	font-size: 16px;
+}
+
+.nav-list form img {
+	width: 19px;
+}
+
 .nav-list a {
 	display: flex;
 	justify-content: center;
@@ -83,7 +105,9 @@ ul.nav-list {
 	flex-direction: column;
 	color: #fff;
 }
-
+.shopping-cart {
+	position: relative;
+}
 .shopping-cart img {
 	width: 25px;
 }
@@ -92,10 +116,37 @@ ul.nav-list {
 	margin: 0;
 }
 
+.shopping-cart span {
+	border-radius: 30px;
+	background: red;
+	padding: 2px 8px;
+	position: absolute;
+	color: #fff;
+	top: -25%;
+	left: 50%;
+}
+.log-in {
+	cursor: pointer;
+}
 .log-in img {
 	width: 19px;
 }
 
 .log-in p {
 	margin: 0;
+}
+
+.logout-and-home form {
+	display: flex;
+	justify-content: flex-end;
+}
+
+.logout-and-home form button {
+	background: inherit;
+	border-style: none;
+	cursor: pointer;
+}
+
+.logout-and-home form button img {
+	width: 45px;
 }

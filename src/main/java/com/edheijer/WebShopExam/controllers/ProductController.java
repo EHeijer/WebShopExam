@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -29,7 +31,29 @@ public class ProductController {
 	@GetMapping("/products")
 	public String getAllProducts(Model model) {
 		model.addAttribute("products", productService.getAllProducts());
+		model.addAttribute("cartSize", shoppingCartService.getProductsInCart().size());
 		return "products";
+	}
+	
+	@GetMapping("/supplements")
+	public String getAllSupplements(Model model) {
+		model.addAttribute("supplements", productService.getAllSupplements());
+		model.addAttribute("cartSize", shoppingCartService.getProductsInCart().size());
+		return "supplements";
+	}
+	
+	@GetMapping("/clothes")
+	public String getAllClothes(Model model) {
+		model.addAttribute("clothes", productService.getAllClothes());
+		model.addAttribute("cartSize", shoppingCartService.getProductsInCart().size());
+		return "clothes";
+	}
+	
+	@GetMapping("/shoes")
+	public String getAllShoes(Model model) {
+		model.addAttribute("shoes", productService.getAllShoes());
+		model.addAttribute("cartSize", shoppingCartService.getProductsInCart().size());
+		return "shoes";
 	}
 	
 	@GetMapping("/shoppingcart")
@@ -37,10 +61,11 @@ public class ProductController {
 //		ModelAndView modelAndView = new ModelAndView("/shoppingcart");
 		model.addAttribute("cart", shoppingCartService.getProductsInCart());
 		model.addAttribute("cartSum", shoppingCartService.getCartSum());
+		model.addAttribute("cartSize", shoppingCartService.getProductsInCart().size());
 		return "shoppingcart";
 	}
 	
-	@GetMapping("/shoppingcart/products/{productId}")
+	@RequestMapping("/shoppingcart/product/{productId}")
 	public String incrementQuantity(@PathVariable("productId") Long productId, Model model) {
 		Product product = productService.getById(productId);
 		System.out.println(product);
@@ -49,10 +74,28 @@ public class ProductController {
 		return "redirect:/shoppingcart";
 	}
 	
-	@GetMapping("/products/{productId}")
+	@RequestMapping("/shoppingcart/products/{productId}")
+	public String decrementQuantity(@PathVariable("productId") Long productId) {
+		Product product = productService.getById(productId);
+		if(shoppingCartService.getProductsInCart().get(product) <= 1) {
+			shoppingCartService.removeProductfromCart(product);
+		}else {
+			shoppingCartService.decrementQuantity(product);
+		}
+		return "redirect:/shoppingcart";
+	}
+	
+	@RequestMapping("/shoppingcart/products/delete/{productId}")
+	public String removeFromCart(@PathVariable("productId") Long productId) {
+		Product product = productService.getById(productId);
+		shoppingCartService.removeProductfromCart(product);
+		return "redirect:/shoppingcart";
+	}
+	
+	@RequestMapping("/products/{productId}")
 	public String addProductToCart(@PathVariable("productId") Long productId) {
 		productService.findById(productId).ifPresent(shoppingCartService::addProductToCart);
-		System.out.println(shoppingCartService.getProductsInCart());
+		System.out.println(shoppingCartService.getProductsInCart().size());
 		return "redirect:/products";
 	}
 	

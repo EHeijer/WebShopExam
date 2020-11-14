@@ -80,5 +80,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 	public void incrementQuantity(Product product) {
 		cart.replace(product, cart.get(product) + 1);
 	}
+	
+	public void decrementQuantity(Product product) {
+		cart.replace(product, cart.get(product) - 1);
+	}
 
 }

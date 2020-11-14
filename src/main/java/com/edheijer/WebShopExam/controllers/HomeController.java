@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class HomeController {
 
-	@GetMapping("/home")
-	public String home() {
-		return "add-css-and-js";
+	@GetMapping("")
+	public String viewHomePage() {
+		return "index";
 	}
 }

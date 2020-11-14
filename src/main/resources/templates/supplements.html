@@ -3,7 +3,7 @@
 	xlmns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <meta charset="ISO-8859-1">
-<title>Products</title>
+<title>Supplements</title>
 <link th:href="@{/css/products.css}" rel="stylesheet">
 <script type="text/javascript" th:src="@{/js/actions.js}"></script>
 <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
@@ -22,7 +22,7 @@
 			<span sec:authentication="principal.authorities">Roles</span>
 		</div>
 		<div class="product-container">
-			<article class="product" th:each="product : ${products}">
+			<article class="product" th:each="product : ${supplements}">
 				<div class="admin-actions" sec:authorize="hasAuthority('ADMIN')">
 					<a class="edit" th:href="@{'/edit/' + ${product.id}}">
 						<img alt="" src="../images/edit-solid.svg">

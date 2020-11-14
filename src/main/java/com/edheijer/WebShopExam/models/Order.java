@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -18,12 +19,14 @@ import javax.persistence.Transient;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor
 @Data
 @Table(name = "orders")
+@EqualsAndHashCode(exclude="user")
 public class Order {
 	
 	@Id
@@ -31,13 +34,14 @@ public class Order {
 	private Long id;
 	
 	private LocalDate dateCreated = LocalDate.now();
+	private boolean isOrderSent = false;
 	
-	@JsonBackReference
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
 	private User user;
 	
-	@OneToMany(mappedBy = "order")
+	@OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
 	private List<OrderLine> orderLines = new ArrayList<>();
 	
 	@Transient
@@ -51,4 +55,10 @@ public class Order {
 		return sum;
 	}
 
+	@Override
+	public String toString() {
+		return "Order [id=" + id + ", dateCreated=" + dateCreated + "]";
+	}
+
+	
 }

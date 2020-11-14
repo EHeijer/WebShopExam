@@ -1,6 +1,7 @@
 .products {
 	max-width: 1538px;
 	margin: auto;
+	min-height: 90vh;
 	padding-top: 130px;
 	padding-left: 2rem;
 	padding-right: 2rem;
@@ -27,6 +28,27 @@
     background: #f5f5f5;
     box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.4);
 }
+.admin-actions {
+	display: flex;
+	justify-content: flex-end;
+	width: 100%;
+	padding: 0 1rem;
+}
+.edit {
+	margin: 0 5px;
+}
+.delete {
+	margin: 0 5px;
+}
+.admin-actions .edit img {
+	width: 33px;
+	
+}
+.admin-actions .delete img {
+	width: 25px;
+	
+}
+
 .product img {
 	width: 80%;
 }

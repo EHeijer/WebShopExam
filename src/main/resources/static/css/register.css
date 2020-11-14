@@ -1,0 +1,21 @@
+.container {
+	padding-top: 130px;
+	min-height: 90vh;
+}
+.input-wrapper {
+	width: 60%;
+	margin: auto;
+}
+.form-control {
+	margin: 0.5rem 0;
+}
+.register {
+	display: flex;
+	justify-content: center;
+}
+.register p {
+	margin: 3px;
+}
+.register a {
+	margin: 3px;
+}

@@ -13,12 +13,31 @@
 	<div th:insert="fragments/header :: header"></div>
 	<div class="order-confirm">
 		<div class="order-confirm-container">
+			<div class="order-top">
+				<h1>Thanks for your order.</h1>
+           		<div class="checkmark">
+               		<i class="fas fa-check-circle" style="font-size:80px;color:rgb(77, 194, 71);"></i>
+           		</div>
+           		<h3>Order number: #123456756</h3>
+			</div>
+			<div class="order-table">
+                   <h4>ORDERED PRODUCTS</h4>
+                   <p>QUANTITY</p>
+                   <p>PRICE</p>
+             </div>
+           
 			<article class="orderline" th:each="orderLine : ${order.orderLines}">
 				<img alt="" th:src="@{${'images/' + orderLine.product.imageUrl}}">
 				<div class="orderline-info">
 					<p th:text="${orderLine.product.productName}"
 						style="font-weight: bold;"></p>
 					<p th:text="${orderLine.product.brand}"></p>
+				</div>
+				<div class="quantity">
+					<p th:text="${orderLine.quantity}"></p>
+				</div>
+				<div class="price">
+					<p th:text="${orderLine.product.price * orderLine.quantity} + ' kr'"></p>
 				</div>
 			</article>
 			<div class="sum-of-order">

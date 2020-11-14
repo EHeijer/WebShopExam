@@ -14,7 +14,7 @@
 
 .cart-item {
 	display: grid;
-	grid-template-columns: 15% 30% 30% 25%;
+	grid-template-columns: 15% 30% 30% 15% 10%;
 }
 
 .cart-item img {
@@ -37,12 +37,15 @@
 	margin-bottom: 0.5rem;
 	width: 150px;
 }
+
 .minus {
 	display: flex;
 }
+
 .plus {
 	display: flex;
 }
+
 .minus img {
 	width: 13px;
 }
@@ -61,6 +64,12 @@
 	width: 13px;
 }
 
+.remove {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+}
+
 .sum-of-cart {
 	display: flex;
 	flex-direction: row;
@@ -73,14 +82,27 @@
 	padding: 0 0.3rem;
 	font-size: 22px;
 }
+
 .total-item-price {
 	align-self: center;
-    justify-self: center;
+	justify-self: center;
 }
+
 .total-item-price p {
 	font-weight: bold;
 	margin: 0;
 }
+
+hr {
+	border: 0;
+	height: 0;
+	border-top: 1px solid rgba(0, 0, 0, 0.1);
+	border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+	width: 100%;
+	margin: auto;
+	grid-column: 2 / span 3;
+}
+
 .send-order {
 	display: flex;
 	justify-content: center;

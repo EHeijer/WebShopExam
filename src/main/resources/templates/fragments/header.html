@@ -4,6 +4,7 @@
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
 <link th:href="@{/css/header.css}" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" th:src="@{/js/actions.js}"></script>
 </head>
 <body>
@@ -12,16 +13,27 @@
             <a href="/" class="title"><h1>SUPPLEMENT STORE</h1></a>
             <ul class="product-list">
                 <li><a href="/products">ALL PRODUCTS</a></li>
-                <li><a href="/products/supplements">SUPPLEMENTS</a></li>
-                <li><a href="/products/clothes">CLOTHES</a></li>
-                <li><a href="/products/shoes">SHOES</a></li>
+                <li><a href="/supplements">SUPPLEMENTS</a></li>
+                <li><a href="/clothes">CLOTHES</a></li>
+                <li><a href="/shoes">SHOES</a></li>
             </ul>
             <ul class="nav-list">
-                <a href="/shoppingcart" class="shopping-cart"> <img src="../images/shopping-cart-solid.png" alt=""><span class="cart-items-counter"></span><p>VARUKORG</p></a>
-                <a href="/login" class="log-in" ><img src="../images/user-solid.png" alt=""><p>LOGGA IN</p></a>
-                <a to="/profile" class="log-in" ><img src="../images/user-solid.png" alt=""><p>MITT KONTO</p></a>
+                <a href="/shoppingcart" class="shopping-cart"> 
+                	<i class="fas fa-shopping-cart" style="font-size:20px;color:#007bff;"></i>
+                	<span class="cart-items-counter" th:text="${cartSize}" th:style="${cartSize != 0 ? 'display:block' : 'display:none'}"></span>
+                	<p>VARUKORG</p>
+                </a>
+                <!-- <a href="/login" class="log-in" ><img src="../images/user-solid.png" alt=""><p>LOGGA IN</p></a> -->
+                <a th:href="@{/customer-profile}" class="log-in" sec:authorize="hasAuthority('USER')and !hasAuthority('EMPLOYEE')and !hasAuthority('ADMIN')" ><i class="fas fa-user" style="font-size:20px;color:#007bff;"></i><p>USER</p></a>
+                <a th:href="@{/employee-profile}" class="log-in" sec:authorize="hasAuthority('EMPLOYEE')and !hasAuthority('ADMIN')" ><i class="fas fa-user" style="font-size:20px;color:#007bff;"></i><p>EMPLOYEE</p></a>
+                <a th:href="@{/admin-profile}" class="log-in" sec:authorize="hasAuthority('ADMIN')" ><i class="fas fa-user" style="font-size:20px;color:#007bff;"></i><p>ADMIN</p></a>
             </ul>
         </div>
     </header>
+    <div th:fragment="logout" class=logout-and-home>
+    	<form th:action="@{/logout}" method="post">
+			<button type="submit"><img src="../images/sign-out-alt-solid.svg" alt=""></button>
+		</form>
+    </div>
 </body>
 </html>
