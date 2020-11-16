@@ -38,26 +38,25 @@ public class UserController {
 	}
 	
 	@GetMapping("/employee-profile")
-	public String employeeProfile() {
+	public String employeeProfile(@AuthenticationPrincipal UserDetailsImpl user, Model model) {
+		model.addAttribute("user", user);
 		return "employee-profile";
 	}
 	
 	@GetMapping("/admin-profile")
-	public String adminProfile() {
+	public String adminProfile(@AuthenticationPrincipal UserDetailsImpl user, Model model) {
+		model.addAttribute("user", user);
 		return "admin-profile";
 	}
 	
-	@PostMapping("/user/edit")
+	@PostMapping("/customer-profile/edit")
 	public String updateUserInfo(@AuthenticationPrincipal UserDetailsImpl authUser,@ModelAttribute("user") User user, Model model) {
-		System.out.println(authUser.getUserId());
 		User userToUpdate = userService.getByUserId(authUser.getUserId());
 		userToUpdate.setEmail(user.getEmail() != null ? user.getEmail() : userToUpdate.getEmail());
 		userToUpdate.setUsername(user.getUsername() != null ? user.getUsername() : userToUpdate.getUsername());
 		userToUpdate.setUserOrders(userToUpdate.getUserOrders());
 		String encodedPassword = "";
-		System.out.println(user.getPassword().isBlank());
-		System.out.println(authUser.getPassword());
-		if(user.getPassword().isBlank()) {
+		if(user.getPassword().isEmpty()) {
 			encodedPassword = authUser.getPassword();
 			
 		}else {
@@ -67,7 +66,34 @@ public class UserController {
 		userService.updateUser(userToUpdate.getId(),userToUpdate);
 		authUser.setUsername(userToUpdate.getUsername());
 		authUser.setEmail(userToUpdate.getEmail());
-		
-		return customerProfile(authUser, model);
+		customerProfile(authUser, model);
+		return "redirect:/customer-profile";
+	}
+	
+	@PostMapping("/employee-profile/edit")
+	public String updateEmployeeInfo(@AuthenticationPrincipal UserDetailsImpl authUser,@ModelAttribute("user") User user, Model model) {
+		User userToUpdate = userService.getByUserId(authUser.getUserId());
+		userToUpdate.setEmail(user.getEmail() != null ? user.getEmail() : userToUpdate.getEmail());
+		userToUpdate.setUsername(user.getUsername() != null ? user.getUsername() : userToUpdate.getUsername());
+		userToUpdate.setUserOrders(userToUpdate.getUserOrders());
+		String encodedPassword = "";
+		if(user.getPassword().isEmpty()) {
+			encodedPassword = authUser.getPassword();
+			
+		}else {
+			encodedPassword = encoder.encode(user.getPassword());
+		}
+		userToUpdate.setPassword(encodedPassword);
+		userService.updateUser(userToUpdate.getId(),userToUpdate);
+		authUser.setUsername(userToUpdate.getUsername());
+		authUser.setEmail(userToUpdate.getEmail());
+		employeeProfile(authUser, model);
+		return "redirect:/employee-profile";
+	}
+	
+	@GetMapping("/orders-to-handle")
+	public String getOrdersToHandle(Model model) {
+		model.addAttribute("orders", orderService.getAllOrders());
+		return "orders-to-handle";
 	}
 }

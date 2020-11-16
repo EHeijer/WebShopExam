@@ -1,7 +1,7 @@
 package com.edheijer.WebShopExam.models;
 
 public enum RoleEnum {
-	USER,
+	CUSTOMER,
 	ADMIN,
 	EMPLOYEE
 }

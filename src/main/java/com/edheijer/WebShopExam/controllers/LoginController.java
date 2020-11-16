@@ -47,7 +47,7 @@ public class LoginController {
 		user.setEnabled(true);
 		
 		Set<Role> roles = new HashSet<>();
-		Role userRole = roleRepository.findByName(RoleEnum.USER).get();
+		Role userRole = roleRepository.findByName(RoleEnum.CUSTOMER).get();
 		roles.add(userRole);
 		user.setRoles(roles);
 		

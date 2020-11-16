@@ -25,7 +25,7 @@
 				<label>Email: </label>
 				<p th:text="${user.email}"></p>
 			</form>
-			<button class="btn btn-primary" onClick="showForm()">
+			<button class="btn btn-primary" onClick="showForm()" style="margin:auto;">
 				<i class="fas fa-edit" style="font-size: 30px; color: #fff;"></i>
 				<p>Edit Info</p>
 			</button>
@@ -60,7 +60,7 @@
 		<div class="exit">
 			<i class="far fa-times-circle" onClick="hideform()"></i>
 		</div>	
-		<form th:action="@{/user/edit}" method="post" th:object="${user}">
+		<form th:action="@{/customer-profile/edit}" method="post" th:object="${user}">
 			<div class="input-wrapper">
 				<div class="form-group row">
 					<input class="form-control" type="text" placeholder="Username"th:field="*{username}" /> 

@@ -24,7 +24,7 @@
                 	<p>VARUKORG</p>
                 </a>
                 <!-- <a href="/login" class="log-in" ><img src="../images/user-solid.png" alt=""><p>LOGGA IN</p></a> -->
-                <a th:href="@{/customer-profile}" class="log-in" sec:authorize="hasAuthority('USER')and !hasAuthority('EMPLOYEE')and !hasAuthority('ADMIN')" ><i class="fas fa-user" style="font-size:20px;color:#007bff;"></i><p>USER</p></a>
+                <a th:href="@{/customer-profile}" class="log-in" sec:authorize="hasAuthority('CUSTOMER')and !hasAuthority('EMPLOYEE')and !hasAuthority('ADMIN')" ><i class="fas fa-user" style="font-size:20px;color:#007bff;"></i><p>CUSTOMER</p></a>
                 <a th:href="@{/employee-profile}" class="log-in" sec:authorize="hasAuthority('EMPLOYEE')and !hasAuthority('ADMIN')" ><i class="fas fa-user" style="font-size:20px;color:#007bff;"></i><p>EMPLOYEE</p></a>
                 <a th:href="@{/admin-profile}" class="log-in" sec:authorize="hasAuthority('ADMIN')" ><i class="fas fa-user" style="font-size:20px;color:#007bff;"></i><p>ADMIN</p></a>
             </ul>

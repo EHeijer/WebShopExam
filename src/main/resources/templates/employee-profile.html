@@ -16,8 +16,47 @@
 	<div class="profile-container">
 		<div th:insert="fragments/header :: logout"></div>
 		<h1>Employee Profile</h1>
+		<div class="profile-card">
+			<div class="profile-icon">
+				<i class="fas fa-user" style="font-size: 100px; color: #007bff;"></i>
+			</div>
+			<h3 th:text="${user.username}"></h3>
+			<form class="email">
+				<label>Email: </label>
+				<p th:text="${user.email}"></p>
+			</form>
+			<div class="employee-functions">
+				<button class="btn btn-primary" onClick="showForm()">
+					<i class="fas fa-edit" style="font-size: 30px; color: #fff;margin-right:3px;"></i>
+					<p>Edit Info</p>
+				</button>
+				<a th:href="@{'/orders-to-handle'}">
+					<button class="btn btn-primary">
+						<i class="fas fa-clipboard-list" style="font-size:30px; color: #fff; margin-right:5px;"></i>
+						<p>View Orders</p>
+					</button>
+				</a>
+			</div>
+		</div>
 	</div>
-
+	<div class="underlying-with-opacity"></div>
+	<div class=edit-form>
+		<div class="exit">
+			<i class="far fa-times-circle" onClick="hideform()"></i>
+		</div>	
+		<form th:action="@{/employee/edit}" method="post" th:object="${user}">
+			<div class="input-wrapper">
+				<div class="form-group row">
+					<input class="form-control" type="text" placeholder="Username"th:field="*{username}" /> 
+					<input class="form-control" type="email" placeholder="Email" th:field="*{email}" /> 
+					<input class="form-control" type="password" placeholder="New Password" th:field="*{password}" minlength="6" maxlength="12" />
+				</div>
+				<div style="width: 100%">
+					<button style="width: 120px" type="submit" class="btn btn-primary">Save</button>
+				</div>
+			</div>
+		</form>
+	</div>
 	<div th:insert="fragments/footer :: footer"></div>
 </body>
 </html>
