@@ -1,7 +1,113 @@
 .order-container {
-	padding: 130px 4rem 2rem 4rem;
-	max-width: 1538px;
+	padding: 130px 2rem 4rem 2rem;
+	
+}
+.top {
+	display: grid;
+	grid-template-columns: repeat(3,1fr);
+	padding: 1rem;
+}
+
+.top h1 {
+	grid-column: 2 / span 1;
+}
+.order-table {
+	max-width: 80vw;
+	margin: auto;
+	overflow-y: scroll;
+	height: 60vh;
 }
 .table {
 	border: solid 1px #000;
+	position: relative;
+}
+.table tbody td  {
+	vertical-align: baseline;
+}
+
+.table .thead-dark th {
+	background: #2f2f2f!important;
+}
+.underlying-with-opacity {
+	position: fixed;
+	background: black;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	z-index: 1;
+	opacity: 0.7;
+	display: none;
+}
+.order-details{
+	display:none;
+	width: 60vw;
+	margin: auto;
+	border: solid #2f2f2f 2px;
+	border-radius: 5px;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 2;
+	background: #fff;
+	padding-bottom: 1rem;
+	overflow-y: scroll;
+	max-height: 60vh;
+}
+.exit {
+	position: absolute;
+	top: 1rem;
+	left: 96%;
+}
+.exit i {
+	font-size: 25px;
+	color: #fff;
+	position: absolute;
+	
+}
+.orderline {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	padding: 0 1rem;
+}
+.orderline div {
+	justify-self: center;
+	align-self: center;
+}
+.product {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+.product img {
+	width: 100px;
+}
+.product p {
+	margin:0;
+}
+.showorder-table {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	background: #212529;
+	color: #fff;
+	font-weight: bold;
+	vertical-align: baseline;
+	padding: 1rem 1rem;
+	margin-bottom: 1rem;
+}
+.showorder-table p {
+	justify-self: center;
+	margin: 0;
+}
+hr {
+	
+	grid-column: 1 / span 3;
+}
+.checkbox-form {
+	display: flex;
+}
+.btn {
+	padding: 0.2rem .75rem!important;
 }

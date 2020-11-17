@@ -1,5 +1,7 @@
 package com.edheijer.WebShopExam.controllers;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.edheijer.WebShopExam.models.Order;
 import com.edheijer.WebShopExam.models.User;
 import com.edheijer.WebShopExam.security.UserDetailsImpl;
 import com.edheijer.WebShopExam.services.OrderService;
@@ -92,8 +95,17 @@ public class UserController {
 	}
 	
 	@GetMapping("/orders-to-handle")
-	public String getOrdersToHandle(Model model) {
-		model.addAttribute("orders", orderService.getAllOrders());
+	public String getOrdersToHandle(Model model, Order order) {
+		model.addAttribute("orders", orderService.getOrdersToHandle());
 		return "orders-to-handle";
+	}
+	
+	@PostMapping("/orders-to-handle/{id}")
+	public String handleOrder(@PathVariable("id") Long id, Order order) {
+		Order realOrder = orderService.findOrderById(id).get();
+		realOrder.setOrderSent(order.isOrderSent());
+		System.out.println(realOrder.isOrderSent());
+		orderService.updateOrder(id, realOrder);
+		return "redirect:/orders-to-handle";
 	}
 }

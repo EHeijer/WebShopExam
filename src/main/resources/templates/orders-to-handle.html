@@ -14,8 +14,10 @@
 	<div th:insert="fragments/header :: header"></div>
 	
 	<div class="order-container">
-		<div th:insert="fragments/header :: logout"></div>
-		<h1>Orders To Handle</h1>
+		<div class="top">
+			<h1 style="text-align:center; ">Orders To Handle</h1>
+			<div th:insert="fragments/header :: logout"></div>
+		</div>
 		<div class="order-table">
 			<table class="table table-striped table bordered">
 				<thead class="thead-dark">
@@ -24,6 +26,8 @@
 						<th>Order Date</th>
 						<th>Order Value</th>
 						<th>Order Status</th>
+						<th style="width:300px; text-align:center;">Handle Order</th>
+						
 					</tr>
 				</thead>
 				<tbody>
@@ -36,12 +40,55 @@
 							Handled</td>
 						<td th:if="${order.isOrderSent() == true}">Order has been
 							sent</td>
+						<td style="display:flex; justify-content:space-around;align-items:center;">
+							<i class="fas fa-search-plus" style="font-size:20px;" th:data-thing="${order.id}" th:onclick="showOrder(this.getAttribute('data-thing'));"></i>
+							<form class="checkbox-form" th:action="@{'/orders-to-handle/{orderId}'(orderId=${order.id})}" th:method="post" th:object="${order}">
+								<div class="checkbox" style="display:flex; flex-direction:column; align-items:center;">
+									<input type="checkbox" name="order-handled"  th:field="${order.orderSent}"/>
+									<label for="order-handled" style="font-weight:bold;font-size:14px; margin-bottom:0;">Ready For Shipping</label>
+								</div>
+								<button style="margin-left:1rem;" type="submit" class="btn btn-primary" value="Save">Save</button>
+							</form>
+						</td>
+						<div th:id="'details' + ${order.id}" class="order-details">
+							
+							<div class="showorder-table">
+								<div class="exit">
+									<i class="far fa-times-circle" th:data-thing="${order.id}"
+										th:onclick="hideOrder(this.getAttribute('data-thing'));"></i>
+								</div>
+								<p>PRODUCT</p>
+								<p>PRODUCT ID</p>
+								<p>QUANTITY</p>
+							</div>	
+							<article class="orderline"
+								th:each="orderLine : ${order.orderLines}">
+								<div class=product>
+									<img alt=""
+										th:src="@{${'images/' + orderLine.product.imageUrl}}">
+									<div class="orderline-info">
+										<p th:text="${orderLine.product.productName}"
+											style="font-weight: bold;"></p>
+										<p th:text="${orderLine.product.brand}"></p>
+									</div>
+								</div>
+								<div>
+									<p th:text="${orderLine.product.id}" style="font-weight:bold;"></p>
+								</div>
+								<div class="quantity">
+									<p th:text="${orderLine.quantity}" style="font-weight:bold;"></p>
+								</div>
+								<hr>
+							</article>
+						</div>
+						
 					</tr>
 				</tbody>
 			</table>
 		</div>
+		
 	</div>
-	
+	<div class="underlying-with-opacity"></div>
 	<div th:insert="fragments/footer :: footer"></div>
 </body>
 </html>
