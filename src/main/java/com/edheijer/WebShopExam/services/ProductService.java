@@ -53,6 +53,12 @@ public class ProductService {
 		return productRepository.getOne(id);
 	}
 
+	public void updateProduct(Long id, Product product) {
+		productRepository.saveAndFlush(product);
+	}
 	
+	public void deleteProductById(Long id) {
+		productRepository.deleteById(id);
+	}
 	
 }

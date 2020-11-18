@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,7 +30,7 @@ public class ProductController {
 	private ShoppingCartServiceImpl shoppingCartService;
 	
 	@GetMapping("/products")
-	public String getAllProducts(Model model) {
+	public String getAllProducts(Model model, Product product) {
 		model.addAttribute("products", productService.getAllProducts());
 		model.addAttribute("cartSize", shoppingCartService.getProductsInCart().size());
 		return "products";
@@ -65,7 +66,7 @@ public class ProductController {
 		return "shoppingcart";
 	}
 	
-	@RequestMapping("/shoppingcart/product/{productId}")
+	@GetMapping("/shoppingcart/product/{productId}")
 	public String incrementQuantity(@PathVariable("productId") Long productId, Model model) {
 		Product product = productService.getById(productId);
 		System.out.println(product);
@@ -74,7 +75,7 @@ public class ProductController {
 		return "redirect:/shoppingcart";
 	}
 	
-	@RequestMapping("/shoppingcart/products/{productId}")
+	@GetMapping("/shoppingcart/products/{productId}")
 	public String decrementQuantity(@PathVariable("productId") Long productId) {
 		Product product = productService.getById(productId);
 		if(shoppingCartService.getProductsInCart().get(product) <= 1) {
@@ -85,17 +86,33 @@ public class ProductController {
 		return "redirect:/shoppingcart";
 	}
 	
-	@RequestMapping("/shoppingcart/products/delete/{productId}")
+	@GetMapping("/shoppingcart/products/delete/{productId}")
 	public String removeFromCart(@PathVariable("productId") Long productId) {
 		Product product = productService.getById(productId);
 		shoppingCartService.removeProductfromCart(product);
 		return "redirect:/shoppingcart";
 	}
 	
-	@RequestMapping("/products/{productId}")
+	@GetMapping("/products/{productId}")
 	public String addProductToCart(@PathVariable("productId") Long productId) {
 		productService.findById(productId).ifPresent(shoppingCartService::addProductToCart);
 		System.out.println(shoppingCartService.getProductsInCart().size());
+		return "redirect:/products";
+	}
+	
+	@PostMapping("/products/edit/{productId}")
+	public String editProduct(@PathVariable("productId") Long productId,@ModelAttribute("product") Product product) {
+		Product productToUpdate = productService.findById(productId).get();
+		productToUpdate.setProductName(!product.getProductName().isEmpty() ? product.getProductName() : productToUpdate.getProductName());
+		productToUpdate.setBrand(!product.getBrand().isEmpty() ? product.getBrand() : productToUpdate.getBrand());
+		productToUpdate.setPrice(product.getPrice() != 0D ? product.getPrice() : productToUpdate.getPrice());
+		productService.updateProduct(productId, productToUpdate);
+		return "redirect:/products";
+	}
+	
+	@GetMapping("/products/delete/{productId}")
+	public String deleteProduct(@PathVariable("productId") Long productId) {
+		productService.deleteProductById(productId);
 		return "redirect:/products";
 	}
 	

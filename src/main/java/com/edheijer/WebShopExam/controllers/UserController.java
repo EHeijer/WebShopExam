@@ -46,7 +46,13 @@ public class UserController {
 		return "employee-profile";
 	}
 	
-	@GetMapping("/admin-profile")
+	@GetMapping("/admin-portal")
+	public String adminPortal(@AuthenticationPrincipal UserDetailsImpl user, Model model) {
+		model.addAttribute("user", user);
+		return "admin-portal";
+	}
+	
+	@GetMapping("/admin-portal/admin-profile")
 	public String adminProfile(@AuthenticationPrincipal UserDetailsImpl user, Model model) {
 		model.addAttribute("user", user);
 		return "admin-profile";
@@ -104,7 +110,6 @@ public class UserController {
 	public String handleOrder(@PathVariable("id") Long id, Order order) {
 		Order realOrder = orderService.findOrderById(id).get();
 		realOrder.setOrderSent(order.isOrderSent());
-		System.out.println(realOrder.isOrderSent());
 		orderService.updateOrder(id, realOrder);
 		return "redirect:/orders-to-handle";
 	}

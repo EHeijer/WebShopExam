@@ -24,10 +24,10 @@
 		<div class="product-container">
 			<article class="product" th:each="product : ${products}">
 				<div class="admin-actions" sec:authorize="hasAuthority('ADMIN')">
-					<a class="edit" th:href="@{'/edit/' + ${product.id}}">
+					<a class="edit" th:data-thing="${product.id}" th:onclick="showProductForm(this.getAttribute('data-thing'));">
 						<img alt="" src="../images/edit-solid.svg">
 					</a>
-					<a class="delete" th:href="@{'/delete/' + ${product.id}}">
+					<a class="delete" th:href="@{'products/delete/' + ${product.id}}">
 						<img alt="" src="../images/trash-alt-solid.svg">
 					</a>
 				</div>
@@ -43,9 +43,28 @@
 					</a>
 
 				</div>
+				<div class="edit-form" th:id="'edit' + ${product.id}">
+							<div class="exit">
+								<i class="far fa-times-circle" th:data-thing="${product.id}" th:onclick="hideProductForm(this.getAttribute('data-thing'));"></i>
+							</div>
+							<form th:action="@{'/products/edit/{productId}'(productId=${product.id})}" method="post" th:object="${product}">
+								<div class="input-wrapper">
+									<div class="form-group row">
+										<input class="form-control" type="text" placeholder="Product Name" th:field="${product.productName}" /> 
+										<input class="form-control" type="text" placeholder="Brand" th:field="${product.brand}" /> 
+										<input class="form-control" type="number" placeholder="New Price" th:field="${product.price}"/>
+									</div>
+									<div style="width: 100%">
+										<button style="width: 120px" type="submit"class="btn btn-primary">Save</button>
+									</div>
+								</div>
+							</form>
+						</div>
 			</article>
 		</div>
 	</div>
+	
+	<div class="underlying-with-opacity"></div>
 	<div th:insert="fragments/footer :: footer"></div>
 </body>
 </html>

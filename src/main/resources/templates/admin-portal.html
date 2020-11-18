@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xlmns:th="http://www.thymeleaf.org"
+	xlmns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="ISO-8859-1">
+<title>Admin Portal</title>
+<link th:href="@{/css/admin-portal.css}" rel="stylesheet">
+<script type="text/javascript" th:src="@{/js/actions.js}"></script>
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+<th:block th:include="fragments/header :: head"></th:block>
+<th:block th:include="fragments/footer :: head"></th:block>
+</head>
+<body>
+	<div th:insert="fragments/header :: header"></div>
+	
+	<div class="admin-container">
+		<div class="admin-top">
+			<div class="profile-icon">
+				<i class="fas fa-user" style="font-size: 100px; color: #007bff;"></i>
+			</div>
+			<div class="admin-panel">
+				<h1>ADMIN PORTAL</h1>
+				<div class="home-and-logout">
+					<i class="fas fa-home"></i>
+					<i class="fas fa-sign-out-alt"></i>
+				</div>
+			</div>
+		</div>
+		<div class="admin-actions">
+			<a th:href="@{/admin-portal/admin-profile}" class="icons">
+				<i class="far fa-user"></i>
+				<h4>VIEW PROFILE</h4>
+			</a>
+			<a th:href="@{/admin-portal/view-users}" class="icons">
+				<i class="fas fa-users"></i>
+				<h4>VIEW USERS</h4>
+			</a>
+			<a th:href="@{/admin-portal/view-products}" class="icons">
+				<i class="fas fa-tshirt"></i>
+				<h4>VIEW PRODUCTS</h4>
+			</a>
+			<a th:href="@{/admin-portal/orderhistory}" class="icons">
+				<i class="fas fa-history"></i>
+				<h4>VIEW ORDER HISTORY</h4>
+			</a>
+			<a th:href="@{/orders-to-handle}" class="icons">
+				<i class="fas fa-tasks"></i>
+				<h4>VIEW ORDERS TO HANDLE</h4>
+			</a>
+			<a th:href="@{/admin-portal/statistics}" class="icons">
+				<i class="fas fa-chart-line"></i>
+				<h4>VIEW STATISTICS</h4>
+			</a>
+		</div>
+	</div>
+
+	<div th:insert="fragments/footer :: footer"></div>
+</body>
+</html>

@@ -22,3 +22,16 @@ function hideOrder(id) {
 	document.querySelector('.underlying-with-opacity').style.display = 'none';
 	document.querySelector('body').style.overflowY = "visible";
 }
+
+function showProductForm(id) {
+	console.log(id)
+	document.getElementById("edit"+id).style.display = 'block';
+	document.querySelector('.underlying-with-opacity').style.display = 'block';
+	document.querySelector('body').style.overflowY = "hidden";
+}
+
+function hideProductForm(id) {
+	document.getElementById("edit"+id).style.display = 'none';
+	document.querySelector('.underlying-with-opacity').style.display= 'none';
+//	document.querySelector('body').style.overflowY = "visible";
+}
