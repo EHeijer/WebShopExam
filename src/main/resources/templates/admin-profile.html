@@ -44,7 +44,7 @@
 		<div class="exit">
 			<i class="far fa-times-circle" onClick="hideform()"></i>
 		</div>	
-		<form th:action="@{/employee/edit}" method="post" th:object="${user}">
+		<form th:action="@{/admin-profile/edit}" method="post" th:object="${user}">
 			<div class="input-wrapper">
 				<div class="form-group row">
 					<input class="form-control" type="text" placeholder="Username"th:field="*{username}" /> 

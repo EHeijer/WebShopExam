@@ -14,12 +14,12 @@ import com.edheijer.WebShopExam.repositories.OrderRepository;
 
 
 @Service
-@Transactional
 public class OrderService {
 
 	@Autowired
 	private OrderRepository orderRepository;
 	
+	@Transactional
 	public Order addOrder(Order Order) {
 		return orderRepository.saveAndFlush(Order);
 	}

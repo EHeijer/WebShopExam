@@ -47,7 +47,7 @@ public class OrderController {
 			return modelAndView;
 		} else {
 		Order order = new Order();
-		User currentUser = userService.getByUserId(user.getUserId());
+		User currentUser = userService.getUserAndFetchOrders(user.getUserId());
 		orderService.addOrder(order);
 		List<OrderLine> orderLines = new ArrayList<OrderLine>();
 		Map<Product, Integer> cart = shoppingCartService.getProductsInCart();
@@ -62,7 +62,8 @@ public class OrderController {
 		}
 		order.setOrderLines(orderLines);
 		order.setUser(currentUser);
-		user.getUserOrders().add(order);
+		System.out.println("HÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄr");
+		currentUser.getUserOrders().add(order);
 		ModelAndView modelAndView = new ModelAndView("/orderconfirm");
 		modelAndView.addObject("order", order);
 		modelAndView.addObject("orderSum", order.getTotalOrderPrice());

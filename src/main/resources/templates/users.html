@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xlmns:th="http://www.thymeleaf.org"
+	xlmns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="ISO-8859-1">
+<title>Users</title>
+<link th:href="@{/css/users.css}" rel="stylesheet">
+<script type="text/javascript" th:src="@{/js/actions.js}"></script>
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+<th:block th:include="fragments/header :: head"></th:block>
+<th:block th:include="fragments/footer :: head"></th:block>
+</head>
+<body>
+	<div th:insert="fragments/header :: header"></div>
+	
+	<div class="user-container">
+		<div class="top">
+			<h1 style="text-align:center; ">All Users</h1>
+			<div th:insert="fragments/header :: logout"></div>
+		</div>
+		<div class="user-table">
+			<table class="table table-striped table bordered">
+				<thead class="thead-dark">
+					<tr>
+						<th>User ID</th>
+						<th>Username</th>
+						<th>Email</th>
+						<th>Access Level</th>
+						<th style="width:350px; text-align:center;">Actions</th>
+						
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="user: ${users}">
+						<td th:text="${user.id}">User ID</td>
+						<td th:text="${user.username}">Username</td>
+						<td th:text="${user.email}">Email</td>
+						<td th:if="${user.roles.size() == 1 && user.roles.contains(customer)}">Customer</td>
+						<td th:if="${user.roles.contains(employee) && !user.roles.contains(admin)}">Employee</td>
+						<td th:if="${user.roles.contains(admin)}">Admin</td>
+						<td style="display:flex; justify-content:space-around;align-items:center;">
+							<form class="access-form" th:action="@{'/users/access-level/{userId}'(userId=${user.id})}" th:method="post" th:object="${user}">
+								<select th:field="*{roles}">
+										<!-- <option th:value="admin" >Admin</option>
+										<option th:value="employee" >Employee</option>
+										<option th:value="customer" >Customer</option> -->
+										<option value="">Change Access</option>
+										<option th:each="role : ${roles}" th:value="${role.id}" th:utext="${role.name}"/>
+								</select>
+								<button  style="font-size:12px; font-weight:bold;" type="submit" class="btn btn-primary" value="Save">Change</button>
+							</form>
+							<form class="disable-form" th:action="@{'/users/disable/{userId}'(userId=${user.id})}" th:method="post" th:object="${user}">
+								<div class="disable" style="display:flex; flex-direction:column; align-items:center;">
+									<!-- <select th:if="${user.isEnabled() == true}" th:field="*{enabled}">
+										<option th:value="${true}" >User Enabled</option>
+										<option th:value="${false}" >User Disabled</option>
+									</select>
+									 -->
+									<!-- <input type="checkbox" name="employee"   th:value="${user.roles}"  th:checked="${user.roles.contains(employee) || user.roles.contains(admin)}" />
+									<label for="employee" style="font-weight:bold;font-size:14px; margin-bottom:0;">Employee</label>
+									<input type="checkbox" name="admin"   th:value="${user.roles}"  th:checked="${user.roles.contains(admin)}" />
+									<label for="admin" style="font-weight:bold;font-size:14px; margin-bottom:0;">Admin</label> -->
+									<!-- <input th:if="${user.isEnabled() == true}"  type="checkbox" name="disable" th:value="${user.isEnabled() == false}" />
+									<label th:if="${user.isEnabled() == true}" for="disable" style="font-weight:bold;font-size:14px; margin-bottom:0;">Disable User</label>
+									<input th:if="${user.isEnabled() == false}"  type="checkbox" name="enable" th:value="${user.isEnabled() == true}"/>
+									<label th:if="${user.isEnabled() == false}" for="enable" style="font-weight:bold;font-size:14px; margin-bottom:0;">Enable User</label>  -->
+								</div>
+								<button th:if="${user.isEnabled() == true}" style="font-size:12px; font-weight:bold; width:100px;" type="submit" class="btn btn-primary" value="Save">Disable User</button>
+								<button  th:if="${user.isEnabled() == false}" style="font-size:12px; font-weight:bold; width:100px;" type="submit" class="btn btn-primary" value="Save">Enable User</button>
+							</form>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		
+	</div>
+	<div class="underlying-with-opacity"></div>
+	<div th:insert="fragments/footer :: footer"></div>
+</body>
+</html>

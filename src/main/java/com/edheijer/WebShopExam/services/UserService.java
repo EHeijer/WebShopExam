@@ -1,5 +1,6 @@
 package com.edheijer.WebShopExam.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,10 @@ public class UserService {
 	public Optional<User> getByUsername(String username) {
 		return userRepository.findByUsername(username);
 	}
+	
+	public Optional<User> getById(Long id) {
+		return userRepository.findById(id);
+	}
 
 	public void registerUser(User user) {
 		userRepository.saveAndFlush(user);
@@ -30,5 +35,13 @@ public class UserService {
 	
 	public User getByUserId(Long id) {
 		return userRepository.getOne(id);
+	}
+	
+	public List<User> getAllUsers(){
+		return userRepository.findAll();
+	}
+	
+	public User getUserAndFetchOrders(Long id) {
+		return userRepository.findUserAndFetchOrders(id);
 	}
 }

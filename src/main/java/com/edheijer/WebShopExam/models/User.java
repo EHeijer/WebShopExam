@@ -52,14 +52,15 @@ public class User {
 	private Set<Role> roles = new HashSet<Role>();
 
 	
-	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
 	private List<Order> userOrders = new ArrayList<Order>();
 
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", email=" + email + ", password=" + password
-				+ ", enabled=" + enabled + ", roles=" + roles + "]";
+				+ ", enabled=" + enabled +  "]";
 	}
+	
 	
 	
 }
