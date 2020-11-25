@@ -110,6 +110,16 @@ public class ProductController {
 		return "redirect:/products";
 	}
 	
+	@PostMapping("/admin-portal/products/edit/{productId}")
+	public String editProductView(@PathVariable("productId") Long productId,@ModelAttribute("product") Product product) {
+		Product productToUpdate = productService.findById(productId).get();
+		productToUpdate.setProductName(!product.getProductName().isEmpty() ? product.getProductName() : productToUpdate.getProductName());
+		productToUpdate.setBrand(!product.getBrand().isEmpty() ? product.getBrand() : productToUpdate.getBrand());
+		productToUpdate.setPrice(product.getPrice() != 0D ? product.getPrice() : productToUpdate.getPrice());
+		productService.updateProduct(productId, productToUpdate);
+		return "redirect:/admin-portal/view-products";
+	}
+	
 	@GetMapping("/products/delete/{productId}")
 	public String deleteProduct(@PathVariable("productId") Long productId) {
 		productService.deleteProductById(productId);

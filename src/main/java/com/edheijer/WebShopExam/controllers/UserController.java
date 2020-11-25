@@ -18,11 +18,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.edheijer.WebShopExam.models.Order;
+import com.edheijer.WebShopExam.models.Product;
 import com.edheijer.WebShopExam.models.Role;
 import com.edheijer.WebShopExam.models.RoleEnum;
 import com.edheijer.WebShopExam.models.User;
 import com.edheijer.WebShopExam.security.UserDetailsImpl;
 import com.edheijer.WebShopExam.services.OrderService;
+import com.edheijer.WebShopExam.services.ProductService;
 import com.edheijer.WebShopExam.services.RoleService;
 import com.edheijer.WebShopExam.services.UserService;
 import com.zaxxer.hikari.util.SuspendResumeLock;
@@ -41,6 +43,9 @@ public class UserController {
 	
 	@Autowired
 	private RoleService roleService;
+	
+	@Autowired
+	private ProductService productService;
 	
 	@GetMapping("/customer-profile")
 	public String customerProfile(@AuthenticationPrincipal UserDetailsImpl authUser, Model model) {
@@ -69,7 +74,7 @@ public class UserController {
 	}
 	
 	@GetMapping("/admin-portal/users")
-	public String viewAllUsers(Model model, User user, Role role) {
+	public String viewAllUsers(Model model, User user) {
 		
 		
 		model.addAttribute("customer", roleService.getRoleByName(RoleEnum.CUSTOMER).get());
@@ -144,6 +149,18 @@ public class UserController {
 		return "redirect:/admin-portal/admin-profile";
 	}
 	
+	@GetMapping("/admin-portal/view-products")
+	public String getProductRegister(Model model, Product product) {
+		model.addAttribute("products", productService.getAllProducts());
+		return "view-products";
+	}
+	
+	@GetMapping("/admin-portal/orderhistory")
+	public String getOrderHistory(Model model, Order order) {
+		model.addAttribute("orders", orderService.getAllOrders());
+		return "orderhistory";
+	}
+	
 	@GetMapping("/orders-to-handle")
 	public String getOrdersToHandle(Model model, Order order) {
 		model.addAttribute("orders", orderService.getOrdersToHandle());
@@ -175,11 +192,14 @@ public class UserController {
 	public String changeAccessLevel(@PathVariable("id") Long id, @ModelAttribute("role") Role role) {
 //		System.out.println(roleService.getRoleByName(RoleEnum.CUSTOMER).get());
 		User userToUpdate = userService.getById(id).get();
+		Role getRole = roleService.getRoleByName(role.getName()).get();
 		Set<Role> userRoles = userToUpdate.getRoles();
+		userRoles.clear();
+		userRoles.add(getRole);
 		System.out.println(userRoles);
-		System.out.println(role);
+		System.out.println(getRole);
 //		userToUpdate.setRoles(!user.getRoles().isEmpty() ? user.getRoles() : userToUpdate.getRoles());
-//		userService.updateUser(id, userToUpdate);
+		userService.updateUser(id, userToUpdate);
 		return "redirect:/admin-portal/users";
 	}
 	

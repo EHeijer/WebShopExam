@@ -1,6 +1,6 @@
 .order-container {
 	padding: 130px 2rem 4rem 2rem;
-	
+	min-height: 95vh;
 }
 .top {
 	display: grid;
@@ -15,11 +15,10 @@
 	max-width: 80vw;
 	margin: auto;
 	overflow-y: scroll;
-	height: 60vh;
+	max-height: 60vh;
 }
 .table {
 	border: solid 1px #000;
-	position: relative;
 }
 .table tbody td  {
 	vertical-align: baseline;
@@ -53,7 +52,7 @@
 	background: #fff;
 	padding-bottom: 1rem;
 	overflow-y: scroll;
-	max-height: 60vh;
+	max-height: 600px;
 }
 .exit {
 	position: absolute;

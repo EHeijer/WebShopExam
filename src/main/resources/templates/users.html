@@ -39,13 +39,13 @@
 						<td th:if="${user.roles.contains(employee) && !user.roles.contains(admin)}">Employee</td>
 						<td th:if="${user.roles.contains(admin)}">Admin</td>
 						<td style="display:flex; justify-content:space-around;align-items:center;">
-							<form class="access-form" th:action="@{'/users/access-level/{userId}'(userId=${user.id})}" th:method="post" th:object="${user}">
-								<select th:field="*{roles}">
+							<form class="access-form" th:action="@{'/users/access-level/{userId}'(userId=${user.id})}" th:method="post" th:object="${role}">
+								<select th:field="${role.name}">
 										<!-- <option th:value="admin" >Admin</option>
 										<option th:value="employee" >Employee</option>
 										<option th:value="customer" >Customer</option> -->
 										<option value="">Change Access</option>
-										<option th:each="role : ${roles}" th:value="${role.id}" th:utext="${role.name}"/>
+										<option th:each="role : ${roles}" th:value="${role.name}" th:utext="${role.name}"/>
 								</select>
 								<button  style="font-size:12px; font-weight:bold;" type="submit" class="btn btn-primary" value="Save">Change</button>
 							</form>
