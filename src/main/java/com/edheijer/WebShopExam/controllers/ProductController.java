@@ -1,5 +1,6 @@
 package com.edheijer.WebShopExam.controllers;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.edheijer.WebShopExam.models.Product;
@@ -31,7 +33,7 @@ public class ProductController {
 	
 	@GetMapping("/products")
 	public String getAllProducts(Model model, Product product) {
-		model.addAttribute("products", productService.getAllProducts());
+		model.addAttribute("products", productService.getAllProductsNotRemoved());
 		model.addAttribute("cartSize", shoppingCartService.getProductsInCart().size());
 		return "products";
 	}
@@ -121,9 +123,40 @@ public class ProductController {
 	}
 	
 	@GetMapping("/products/delete/{productId}")
-	public String deleteProduct(@PathVariable("productId") Long productId) {
-		productService.deleteProductById(productId);
+	public String deleteProductFromView(@PathVariable("productId") Long productId) {
+		Product product = productService.findById(productId).get();
+		product.setRemoved(true);
+		productService.updateProduct(productId, product);
 		return "redirect:/products";
 	}
+	@GetMapping("/admin-portal/products/delete/{productId}")
+	public String deleteProductFromAdminView(@PathVariable("productId") Long productId) {
+		Product product = productService.findById(productId).get();
+		product.setRemoved(true);
+		productService.updateProduct(productId, product);
+		return "redirect:/admin-portal/view-products";
+	}
+	@GetMapping("/admin-portal/products/addToView/{productId}")
+	public String addProductFromAdminView(@PathVariable("productId") Long productId) {
+		Product product = productService.findById(productId).get();
+		product.setRemoved(false);
+		productService.updateProduct(productId, product);
+		return "redirect:/admin-portal/view-products";
+	}
+	
+	@GetMapping("/search")
+	public String searchProducts(@RequestParam(value = "searchInput") String searchInput, Model model, Product product) {
+		System.out.println(searchInput);
+		List<Product> products = productService.getProductsAfterSearching(searchInput);
+		System.out.println(products);
+		if(products.isEmpty()) {
+			return "redirect:/products";
+		}else {
+			model.addAttribute("products", products);
+			return "products-after-search";
+		}
+		
+	}
+	
 	
 }

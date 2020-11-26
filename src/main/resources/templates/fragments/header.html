@@ -10,25 +10,33 @@
 <body>
 	<header th:fragment="header">
         <div class="header-container">
-            <a href="/" class="title"><h1>SUPPLEMENT STORE</h1></a>
-            <ul class="product-list">
+            <a href="/" class="title"><h3>SUPPLEMENT STORE</h3></a>
+			<div class="search">
+				<form th:action="@{/search}">
+					<input placeholder="Search products..." th:name="searchInput"/>
+					<button type="submit"><i class="fas fa-search"></i></button>
+				</form>
+			</div>
+			<ul class="product-list">
                 <li><a href="/products">ALL PRODUCTS</a></li>
                 <li><a href="/supplements">SUPPLEMENTS</a></li>
                 <li><a href="/clothes">CLOTHES</a></li>
                 <li><a href="/shoes">SHOES</a></li>
             </ul>
             <ul class="nav-list">
-                <a href="/shoppingcart" class="shopping-cart"> 
+                <a sec:authorize="hasAnyAuthority('ADMIN','EMPLOYEE','CUSTOMER')" href="/shoppingcart" class="shopping-cart"> 
                 	<i class="fas fa-shopping-cart" style="font-size:20px;color:#007bff;"></i>
-                	<span class="cart-items-counter" th:text="${cartSize}" th:style="${cartSize != 0 ? 'display:block' : 'display:none'}"></span>
+                	<span th:if="${cartSize > 0}" class="cart-items-counter" th:text="${cartSize}" th:style="${cartSize != 0 ? 'display:block' : 'display:none'}"></span>
                 	<p>VARUKORG</p>
                 </a>
                 <!-- <a href="/login" class="log-in" ><img src="../images/user-solid.png" alt=""><p>LOGGA IN</p></a> -->
-                <a th:href="@{/customer-profile}" class="log-in" sec:authorize="hasAuthority('CUSTOMER')and !hasAuthority('EMPLOYEE')and !hasAuthority('ADMIN')" ><i class="fas fa-user" style="font-size:20px;color:#007bff;"></i><p>CUSTOMER</p></a>
-                <a th:href="@{/employee-profile}" class="log-in" sec:authorize="hasAuthority('EMPLOYEE')and !hasAuthority('ADMIN')" ><i class="fas fa-user" style="font-size:20px;color:#007bff;"></i><p>EMPLOYEE</p></a>
-                <a th:href="@{/admin-portal}" class="log-in" sec:authorize="hasAuthority('ADMIN')" ><i class="fas fa-user" style="font-size:20px;color:#007bff;"></i><p>ADMIN</p></a>
+                <a th:href="@{/customer-profile}" class="log-in" sec:authorize="hasAuthority('CUSTOMER')and !hasAuthority('EMPLOYEE')and !hasAuthority('ADMIN')" ><i class="fas fa-user" style="font-size:20px;color:#007bff;"></i><p>MY ACCOUNT</p></a>
+                <a th:href="@{/employee-profile}" class="log-in" sec:authorize="hasAuthority('EMPLOYEE')and !hasAuthority('ADMIN')" ><i class="fas fa-user" style="font-size:20px;color:#007bff;"></i><p>EMPLOYEE PROFILE</p></a>
+                <a th:href="@{/admin-portal}" class="log-in" sec:authorize="hasAuthority('ADMIN')" ><i class="fas fa-user" style="font-size:20px;color:#007bff;"></i><p>ADMIN PORTAL</p></a>
             </ul>
+            
         </div>
+        
     </header>
     <div th:fragment="logout" class=logout-and-home>
     	<form th:action="@{/logout}" method="post">

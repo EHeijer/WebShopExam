@@ -28,6 +28,7 @@
 						<th>Name</th>
 						<th>Category</th>
 						<th>Price</th>
+						<th>Status</th>
 						<th style="width:300px; text-align:center;">Actions</th>
 					</tr>
 				</thead>
@@ -39,8 +40,16 @@
 						<td th:text="${product.productName}"></td>
 						<td th:text="${product.category}"></td>
 						<td th:text="${product.price}"></td>
+						<td th:if="${product.removed == false}" >In Stock</td>
+						<td th:if="${product.removed == true}" >Not In Stock</td>
 						<td style="text-align:center;">
-							<i class="fas fa-edit" style="font-size:20px;" th:data-thing="${product.id}" th:onclick="showProductForm(this.getAttribute('data-thing'));"></i>
+							<i class="fas fa-edit" style="font-size:25px; margin: 0 5px;" th:data-thing="${product.id}" th:onclick="showProductForm(this.getAttribute('data-thing'));"></i>
+							<a th:if="${product.removed == false}" class="delete" style="color:#000;" th:href="@{'/admin-portal/products/delete/' + ${product.id}}">
+								<i class="fas fa-trash-alt" style="font-size:25px; margin: 0 5px;"></i>
+							</a>
+							<a th:if="${product.removed == true}" class="add" style="color:#000;" th:href="@{'/admin-portal/products/addToView/' + ${product.id}}">
+								<i class="fas fa-plus-circle" style="font-size:25px; margin: 0 5px;"></i>
+							</a>
 						</td>
 						<div class="edit-form" th:id="'edit' + ${product.id}">
 							<div class="exit">

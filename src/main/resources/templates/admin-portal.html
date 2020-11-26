@@ -21,8 +21,12 @@
 			<div class="admin-panel">
 				<h1>ADMIN PORTAL</h1>
 				<div class="home-and-logout">
-					<i class="fas fa-home"></i>
-					<i class="fas fa-sign-out-alt"></i>
+					<a href="/products">
+						<i class="fas fa-home"></i>
+					</a>
+					<form th:action="@{/logout}" method="post">
+						<button style="background:inherit;border:none;" type="submit"><i class="fas fa-sign-out-alt"></i></button>
+					</form>	
 				</div>
 			</div>
 		</div>

@@ -16,11 +16,7 @@
 
 
 	<div class="products">
-		<div th:insert="fragments/header :: logout"></div>
-		<div sec:authorize="isAuthenticated()">
-			Welcome <b><span sec:authentication="name"></span></b> &nbsp;
-			<span sec:authentication="principal.authorities">Roles</span>
-		</div>
+		
 		<div class="product-container">
 			<article class="product" th:each="product : ${shoes}">
 				<div class="admin-actions" sec:authorize="hasAuthority('ADMIN')">
