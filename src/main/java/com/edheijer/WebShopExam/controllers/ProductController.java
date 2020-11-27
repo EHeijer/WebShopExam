@@ -1,5 +1,6 @@
 package com.edheijer.WebShopExam.controllers;
 
+import java.io.File;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -122,6 +123,12 @@ public class ProductController {
 		return "redirect:/admin-portal/view-products";
 	}
 	
+	@PostMapping("/admin-portal/add-product")
+	public String addProduct(@ModelAttribute("product") Product product) {
+		productService.addProduct(product);
+		return "redirect:/admin-portal/view-products";
+	}
+	
 	@GetMapping("/products/delete/{productId}")
 	public String deleteProductFromView(@PathVariable("productId") Long productId) {
 		Product product = productService.findById(productId).get();
@@ -149,6 +156,7 @@ public class ProductController {
 		System.out.println(searchInput);
 		List<Product> products = productService.getProductsAfterSearching(searchInput);
 		System.out.println(products);
+		System.out.println(productService.getAllImages());
 		if(products.isEmpty()) {
 			return "redirect:/products";
 		}else {

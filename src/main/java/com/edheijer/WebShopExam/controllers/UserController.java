@@ -152,6 +152,7 @@ public class UserController {
 	@GetMapping("/admin-portal/view-products")
 	public String getProductRegister(Model model, Product product) {
 		model.addAttribute("products", productService.getAllProducts());
+		model.addAttribute("images", productService.getAllImages());
 		return "view-products";
 	}
 	

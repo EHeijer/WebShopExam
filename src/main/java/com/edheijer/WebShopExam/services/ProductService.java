@@ -1,6 +1,9 @@
 package com.edheijer.WebShopExam.services;
 
 
+import java.io.File;
+import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -64,6 +67,20 @@ public class ProductService {
 				.stream()
 				.filter(p -> p.getCategory().equals(ProductCategory.TRAINING_SHOES)).collect(Collectors.toList());
 		return shoes;
+	}
+	
+	public List<String> getAllImages() {
+		File file = new File("src/main/resources/static/images");
+		File [] files = file.listFiles();
+		List<String> imageUrls = new ArrayList<String>();
+		for(int i = 0; i < files.length; i++) {
+			imageUrls.add(files[i].getName());
+		}
+		return imageUrls;
+	}
+	
+	public void addProduct(Product product) {
+		productRepository.saveAndFlush(product);
 	}
 	
 	public Optional<Product> findById(Long id) {

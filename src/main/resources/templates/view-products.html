@@ -62,7 +62,7 @@
 										<input class="form-control" type="text" placeholder="Brand" th:field="${product.brand}" /> 
 										<input class="form-control" type="number" placeholder="New Price" th:field="${product.price}"/>
 									</div>
-									<div style="width: 100%">
+									<div style="width: 100%; display:flex; justify-content:center;">
 										<button style="width: 120px" type="submit"class="btn btn-primary">Save</button>
 									</div>
 								</div>
@@ -73,7 +73,36 @@
 				</tbody>
 			</table>
 		</div>
-		
+		<div class="add-product" >
+			<button class="btn btn-primary" onClick="showRegisterForm()">Add Product <i class="fas fa-plus-circle"></i></button>
+		</div>
+		<div class="register-form">
+			<div class="exit">
+				<i class="far fa-times-circle" onClick="hideRegisterForm()"></i>
+			</div>
+			<form th:action="@{'/admin-portal/add-product'}" method="post" th:object="${product}">
+				<div class="input-wrapper">
+					<div class="form-group row">
+						<input class="form-control" type="text" placeholder="Product Name" th:field="${product.productName}" /> 
+						<input class="form-control" type="text" placeholder="Brand" th:field="${product.brand}" />
+						<input class="form-control" type="number" placeholder="New Price" th:field="${product.price}"/>
+						<select class="select" th:field="${product.imageUrl}">
+							<option value="">Choose Image</option>
+							<option th:each="image : ${images}" th:value="${image}" th:utext="${image}"/>
+						</select>
+						<select class="select" th:field="${product.category}">
+							<option value="">Choose Category</option>
+							<option th:value="SUPPLEMENT" >Supplement</option>
+							<option th:value="CLOTHES" >Clothes</option>
+							<option th:value="TRAINING_SHOES" >Shoes</option>
+						</select>  
+					</div>
+					<div style="width: 100%; display:flex; justify-content:center;">
+						<button style="width: 120px" type="submit"class="btn btn-primary">Save</button>
+					</div>
+				</div>
+			</form>
+		</div>
 	</div>
 	<div class="underlying-with-opacity"></div>
 	<div th:insert="fragments/footer :: footer"></div>

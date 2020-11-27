@@ -23,7 +23,6 @@ public class Product {
 	
 	private String brand;
 	private String productName;
-	private Integer quantity;
 	private double price;
 	private String imageUrl;
 	private boolean removed = false;
