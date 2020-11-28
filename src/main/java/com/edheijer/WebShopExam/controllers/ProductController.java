@@ -40,21 +40,21 @@ public class ProductController {
 	}
 	
 	@GetMapping("/supplements")
-	public String getAllSupplements(Model model) {
+	public String getAllSupplements(Model model, Product product) {
 		model.addAttribute("supplements", productService.getAllSupplements());
 		model.addAttribute("cartSize", shoppingCartService.getProductsInCart().size());
 		return "supplements";
 	}
 	
 	@GetMapping("/clothes")
-	public String getAllClothes(Model model) {
+	public String getAllClothes(Model model, Product product) {
 		model.addAttribute("clothes", productService.getAllClothes());
 		model.addAttribute("cartSize", shoppingCartService.getProductsInCart().size());
 		return "clothes";
 	}
 	
 	@GetMapping("/shoes")
-	public String getAllShoes(Model model) {
+	public String getAllShoes(Model model, Product product) {
 		model.addAttribute("shoes", productService.getAllShoes());
 		model.addAttribute("cartSize", shoppingCartService.getProductsInCart().size());
 		return "shoes";

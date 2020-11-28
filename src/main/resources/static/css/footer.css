@@ -1,9 +1,10 @@
 footer {
-	background: #2f2f2f;
+	background: #fff;
 	height: 100px;
 	display: flex;
     justify-content: center;
     align-items: center;
+    box-shadow: 1px 1px 15px 1px rgba(0, 0, 0, 0.4);
 }
 .footer-container {
 	display: flex;
@@ -11,6 +12,6 @@ footer {
 	align-items: center;
 }
 .footer-container p {
-	color: #fff;
+	color: #007bff;
 	margin: 0;
 }

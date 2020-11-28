@@ -14,23 +14,24 @@
 	<div th:insert="fragments/header :: header"></div>
 	
 	<div class="container text-center">
-		<h1>Registration Form</h1>
-		<form th:action="@{/register}" method="post" th:object="${user}" style="max-width:600px; margin: auto;">
+		
+		<form class="register-form" th:action="@{/register}" method="post" th:object="${user}" style="max-width:600px; margin: auto;">
+			<h2>Registration Form</h2>
 			<div class="input-wrapper">
 				<div class="form-group row">
 					<input class="form-control" type="text" placeholder="Username" th:field="*{username}" required />
 					<input class="form-control"  type="email" placeholder="Email" th:field="*{email}" required />
 					<input class="form-control"  type="password" placeholder="Password" th:field="*{password}" required minlength="6" maxlength="12"/>
 				</div>
-				<div style="width: 100%">
-					<button style="width:120px" type="submit" class="btn btn-primary">Register</button>
-				</div>
+				<div class="button-container" >
+					<button type="submit" class="btn btn-primary">Login</button>
+				</div>	
 			</div>
 		</form>
 	</div>
 	
 	
-
+	<div class="underlying-with-opacity"></div>
 	<div th:insert="fragments/footer :: footer"></div>
 </body>
 </html>

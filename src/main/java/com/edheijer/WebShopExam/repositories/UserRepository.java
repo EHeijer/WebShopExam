@@ -15,7 +15,7 @@ public interface UserRepository extends JpaRepository<User, Long>{
 	
 	Optional<User> findById(Long id);
 	
-	@Query("SELECT user FROM User user JOIN FETCH user.userOrders WHERE	user.id=:id")
+	@Query("SELECT user FROM User user LEFT JOIN FETCH user.userOrders WHERE user.id=:id")
 	User findUserAndFetchOrders(@Param("id") Long id);
 	
 	Boolean existsByUsername(String username);

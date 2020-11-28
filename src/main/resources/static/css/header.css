@@ -7,19 +7,21 @@ header {
 	padding: 1.4rem;
 	position: fixed;
 	width: 100vw;
-	background: #2f2f2f;
+	background: #fff;
+	box-shadow: 1px 1px 15px 1px rgba(0, 0, 0, 0.4);
 }
 
 
 .header-container {
 	display: grid;
-	grid-template-columns: 25% 20% 35% 20%;
+	grid-template-columns: 20% 25% 40% 15%;
 	justify-content: space-between;
 	align-items: center;
 }
 
 h3 {
 	margin: 0;
+	font-size:1.5rem;
 }
 
 .title {
@@ -50,11 +52,11 @@ h3 {
 }
 
 .product-list li a {
-	color: #fff;
+	color: #007bff;
 	text-decoration: none;
-	font-size: 15px;
+	font-size: 14px;
 	font-weight: bold;
-	text-align: left;
+	text-align: center;
 }
 
 ul.nav-list {
@@ -65,10 +67,10 @@ ul.nav-list {
 	list-style: none;
 	justify-self: center;
 	display: flex;
-	gap: 2rem;
+	gap: 1rem;
 	justify-content: space-evenly;
 	color: #fff;
-	font-size: 13px;
+	font-size: 12px;
 	font-weight: bold;
 }
 
@@ -97,7 +99,7 @@ ul.nav-list {
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
-	color: #fff;
+	color: #007bff;
 }
 
 .shopping-cart {
@@ -115,7 +117,7 @@ ul.nav-list {
 .shopping-cart span {
 	border-radius: 30px;
 	background: red;
-	padding: 2px 8px;
+	padding: 2px 7px;
 	position: absolute;
 	color: #fff;
 	top: -25%;
@@ -159,16 +161,19 @@ ul.nav-list {
 
 .search input {
 	width: 280px;
-	padding: 0.5rem 0.7rem;
+	padding: 0.5rem 0.9rem;
 	background: #f1f3f5;
-	border: none;
 	border-radius: 30px;
+	border-width: .125rem;
+	border-color: #f1f3f5;
+	border-style: solid;
 }
 
 .search input:focus {
 	border-color: #4dabf7;
+	
 	outline: none;
-	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.0125), 0 0 20px
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.0125), 0 0 8px
 		rgba(34, 139, 230, 0.5);
 }
 
@@ -185,4 +190,16 @@ ul.nav-list {
 .search button i {
 	color: #007bff;
 	font-size: 20px;
+}
+@media screen and (max-width: 1300px) {
+  	.header-container {
+		grid-template-columns: 17.5% 25% 37.5% 20%;
+	}
+	h3 {
+		margin: 0;
+		font-size:1.3rem;
+	}
+	.search input {
+		width: 240px;
+	}
 }

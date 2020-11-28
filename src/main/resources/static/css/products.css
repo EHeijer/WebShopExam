@@ -110,3 +110,22 @@
 	opacity: 0.7;
 	display: none;
 }
+
+@media screen and (max-width: 1175px) {
+	.products {
+		padding-left: 6rem;
+		padding-right: 6rem;
+	}
+  	.product-container {
+		grid-template-columns: repeat(3, 1fr);
+	}
+}
+@media screen and (min-width: 1176px) and (max-width: 1450px) {
+	.products {
+		padding-left: 5.5rem;
+		padding-right: 5.5rem;
+	}
+  	.product-container {
+		grid-template-columns: repeat(4, 1fr);
+	}
+}
