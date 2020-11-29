@@ -22,7 +22,7 @@
 	position: relative;
 }
 .table tbody td  {
-	vertical-align: baseline;
+	vertical-align: middle;
 }
 
 .table .thead-dark th {
