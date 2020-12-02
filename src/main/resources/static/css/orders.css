@@ -110,3 +110,12 @@ hr {
 .btn {
 	padding: 0.2rem .75rem!important;
 }
+.sum {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.sum p {
+	color: red;
+	font-weight: bold;
+}

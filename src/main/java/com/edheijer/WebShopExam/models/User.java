@@ -17,6 +17,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -51,7 +54,8 @@ public class User {
 				inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles = new HashSet<Role>();
 
-	
+//	@JsonManagedReference
+	@JsonIgnore
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
 	private List<Order> userOrders = new ArrayList<Order>();
 

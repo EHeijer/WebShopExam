@@ -3,15 +3,12 @@ package com.edheijer.WebShopExam.controllers;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.edheijer.WebShopExam.models.Order;
@@ -40,37 +37,41 @@ public class OrderController {
 	private UserService userService;
 
 	@PostMapping(path = "/orderconfirm")
-	public ModelAndView addOrder(@AuthenticationPrincipal UserDetailsImpl user) {
+	public ModelAndView addOrder(@AuthenticationPrincipal UserDetailsImpl authUser) {
 		if(shoppingCartService.getProductsInCart().isEmpty()) {
 			ModelAndView modelAndView = new ModelAndView("redirect:/shoppingcart");
 			modelAndView.addObject("cart", shoppingCartService.getProductsInCart());
 			return modelAndView;
 		} else {
 		Order order = new Order();
-		User currentUser = userService.getUserAndFetchOrders(user.getUserId());
+		User currentUser = userService.getUserAndFetchOrders(authUser.getUserId());
 		orderService.addOrder(order);
-		List<OrderLine> orderLines = new ArrayList<OrderLine>();
-		Map<Product, Integer> cart = shoppingCartService.getProductsInCart();
-		System.out.println(currentUser);
-		for(Map.Entry<Product, Integer> entry : cart.entrySet()) {
-			OrderLine orderLine = new OrderLine();
-			orderLine.setOrder(order);
-			orderLine.setProduct(entry.getKey());
-			orderLine.setQuantity(entry.getValue());
-			addOrderLine(orderLine);
-			orderLines.add(orderLine);
-		}
+		List<OrderLine> orderLines = handleOrderlines(order);
 		order.setOrderLines(orderLines);
 		order.setUser(currentUser);
-		System.out.println("HÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄr");
-		currentUser.getUserOrders().add(order);
+		ModelAndView modelAndView = prepareOrderConfirm(order);
+		return modelAndView;
+		}
+	}
+
+	private ModelAndView prepareOrderConfirm(Order order) {
 		ModelAndView modelAndView = new ModelAndView("/orderconfirm");
 		modelAndView.addObject("order", order);
 		modelAndView.addObject("orderSum", order.getTotalOrderPrice());
 		shoppingCartService.getProductsInCart().clear();
 		modelAndView.addObject("cartSize", shoppingCartService.getProductsInCart().size());
 		return modelAndView;
+	}
+
+	private List<OrderLine> handleOrderlines(Order order) {
+		List<OrderLine> orderLines = new ArrayList<OrderLine>();
+		Map<Product, Integer> cart = shoppingCartService.getProductsInCart();
+		for(Map.Entry<Product, Integer> entry : cart.entrySet()) {
+			OrderLine orderLine = new OrderLine(entry.getValue(),order,entry.getKey());
+			addOrderLine(orderLine);
+			orderLines.add(orderLine);
 		}
+		return orderLines;
 	}
 	
 	@PostMapping(path = "/orderLines")

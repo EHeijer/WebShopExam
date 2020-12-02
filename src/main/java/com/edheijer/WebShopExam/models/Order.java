@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -16,7 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -39,8 +38,10 @@ public class Order {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
+//	@JsonBackReference
 	private User user;
 	
+	@JsonManagedReference
 	@OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
 	private List<OrderLine> orderLines = new ArrayList<>();
 	

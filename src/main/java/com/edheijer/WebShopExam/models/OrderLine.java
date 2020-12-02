@@ -9,6 +9,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -24,6 +26,7 @@ public class OrderLine {
 	
 	private int quantity;
 	
+	@JsonBackReference
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "order_id")
 	private Order order;
@@ -31,8 +34,15 @@ public class OrderLine {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "product_id")
 	private Product product;
+	
+	public OrderLine(int quantity, Order order, Product product) {
+		this.quantity = quantity;
+		this.order = order;
+		this.product = product;
+	}
 
 	public double getSumOfOrderLine() {
 		return getProduct().getPrice() * quantity;
 	}
+
 }

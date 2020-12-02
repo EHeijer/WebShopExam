@@ -26,6 +26,7 @@ public class Product {
 	private double price;
 	private String imageUrl;
 	private boolean removed = false;
+	private String shelfNumber;
 	
 	@Enumerated(EnumType.STRING)
 	private ProductCategory category;

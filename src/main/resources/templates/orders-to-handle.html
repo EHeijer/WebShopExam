@@ -26,6 +26,7 @@
 						<th>Order Date</th>
 						<th>Order Value</th>
 						<th>Order Status</th>
+						<th>Customer ID</th>
 						<th style="width:300px; text-align:center;">Handle Order</th>
 						
 					</tr>
@@ -40,6 +41,7 @@
 							Handled</td>
 						<td th:if="${order.isOrderSent() == true}">Order has been
 							sent</td>
+						<td th:text="${order.user.id}"></td>
 						<td style="display:flex; justify-content:space-around;align-items:center;">
 							<i class="fas fa-search-plus" style="font-size:20px;" th:data-thing="${order.id}" th:onclick="showOrder(this.getAttribute('data-thing'));"></i>
 							<form class="checkbox-form" th:action="@{'/orders-to-handle/{orderId}'(orderId=${order.id})}" th:method="post" th:object="${order}">

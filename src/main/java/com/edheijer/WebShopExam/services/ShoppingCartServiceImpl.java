@@ -1,9 +1,7 @@
 package com.edheijer.WebShopExam.services;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -11,6 +9,7 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.annotation.SessionScope;
 
 import com.edheijer.WebShopExam.models.Product;
 import com.edheijer.WebShopExam.repositories.OrderRepository;
@@ -22,7 +21,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Service
-@Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
+@SessionScope
 @Transactional
 public class ShoppingCartServiceImpl implements ShoppingCartService {
 	
@@ -59,12 +58,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 	@Override
 	public Map<Product, Integer> getProductsInCart() {
 		return cart;
-	}
-
-	@Override
-	public void checkoutCart() {
-		
-
 	}
 
 	@Override

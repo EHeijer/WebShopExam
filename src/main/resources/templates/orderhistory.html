@@ -26,6 +26,7 @@
 						<th>Order Date</th>
 						<th>Order Value</th>
 						<th>Order Status</th>
+						<th>Customer ID</th>
 						<th style="text-align:center;">Order Details</th>
 						
 					</tr>
@@ -40,6 +41,7 @@
 							Handled</td>
 						<td th:if="${order.isOrderSent() == true}">Order has been
 							sent</td>
+						<td th:text="${order.user.id}"></td>
 						<td style="text-align:center;">
 							<i class="fas fa-search-plus" style="font-size:20px;" th:data-thing="${order.id}" th:onclick="showOrder(this.getAttribute('data-thing'));"></i>
 						</td>
@@ -73,6 +75,9 @@
 								</div>
 								<hr>
 							</article>
+							<div class="sum">
+								<p th:text="'SUM: ' + ${order.getTotalOrderPrice()}"></p>
+							</div>
 						</div>
 						
 					</tr>
