@@ -11,7 +11,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.edheijer.WebShopExam.models.Order;
 import com.edheijer.WebShopExam.models.Role;
-import com.edheijer.WebShopExam.models.RoleEnum;
 import com.edheijer.WebShopExam.models.User;
 
 import lombok.Data;

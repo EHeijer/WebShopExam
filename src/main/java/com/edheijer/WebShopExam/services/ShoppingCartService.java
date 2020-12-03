@@ -12,4 +12,8 @@ public interface ShoppingCartService {
 	Map<Product, Integer> getProductsInCart();
 	
 	double getCartSum();
+	
+	void incrementQuantity(Product product);
+	
+	void decrementQuantity(Product product);
 }

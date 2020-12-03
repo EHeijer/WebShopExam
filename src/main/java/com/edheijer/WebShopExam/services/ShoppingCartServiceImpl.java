@@ -4,15 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.annotation.SessionScope;
 
 import com.edheijer.WebShopExam.models.Product;
-import com.edheijer.WebShopExam.repositories.OrderRepository;
 import com.edheijer.WebShopExam.repositories.ProductRepository;
 
 import lombok.Data;
@@ -27,9 +23,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 	
 	@Autowired
 	private ProductRepository productRepository;
-	
-	@Autowired
-	private OrderRepository orderRepository;
 	
 	private Map<Product, Integer> cart = new HashMap<Product, Integer>();
 
@@ -70,10 +63,12 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 		return cartSum;
 	}
 	
+	@Override
 	public void incrementQuantity(Product product) {
 		cart.replace(product, cart.get(product) + 1);
 	}
 	
+	@Override
 	public void decrementQuantity(Product product) {
 		cart.replace(product, cart.get(product) - 1);
 	}

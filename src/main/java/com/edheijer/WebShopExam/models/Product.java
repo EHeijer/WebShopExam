@@ -30,4 +30,17 @@ public class Product {
 	
 	@Enumerated(EnumType.STRING)
 	private ProductCategory category;
+
+	public Product(Long id, String brand, String productName, double price, String imageUrl, String shelfNumber,
+			ProductCategory category) {
+		this.id = id;
+		this.brand = brand;
+		this.productName = productName;
+		this.price = price;
+		this.imageUrl = imageUrl;
+		this.shelfNumber = shelfNumber;
+		this.category = category;
+	}
+	
+	
 }

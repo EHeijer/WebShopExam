@@ -15,9 +15,4 @@ public interface UserRepository extends JpaRepository<User, Long>{
 	
 	@Query("SELECT user FROM User user LEFT JOIN FETCH user.userOrders WHERE user.id=:id")
 	User findUserAndFetchOrders(@Param("id") Long id);
-	
-	Boolean existsByUsername(String username);
-	
-	Boolean existsByEmail(String email);
-
 }

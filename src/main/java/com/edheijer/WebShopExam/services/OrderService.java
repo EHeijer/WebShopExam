@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.edheijer.WebShopExam.models.Order;
 import com.edheijer.WebShopExam.repositories.OrderRepository;
