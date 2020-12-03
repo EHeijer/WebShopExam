@@ -1,6 +1,8 @@
 package com.edheijer.WebShopExam;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.Optional;
@@ -49,9 +51,8 @@ public class UserServiceTests {
 	@Test
 	public void registerUserTest() {
 		User user = new User();
-		when(userRepository.saveAndFlush(user)).thenReturn(user);
-		
-		assertEquals(1, userService.getAllUsers().size());
+		userService.registerUser(user);
+		verify(userRepository, times(1)).saveAndFlush(user);
 	}
 	
 	@Test

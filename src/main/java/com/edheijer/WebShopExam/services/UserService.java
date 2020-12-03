@@ -25,8 +25,8 @@ public class UserService {
 		return userRepository.findById(id);
 	}
 
-	public void registerUser(User user) {
-		userRepository.saveAndFlush(user);
+	public User registerUser(User user) {
+		return userRepository.saveAndFlush(user);
 	}
 	
 	public void updateUser(Long id, User user) {
