@@ -67,14 +67,15 @@
 	cursor: pointer;
 }
 .icons i{
-	font-size: 160px;
+	font-size: 120px;
 	color: #007bff;
-	margin-bottom: 0.8rem;
+	margin-bottom: 0.5rem;
 }
 .icons h4 {
 	text-align: center;
 	color: #007bff;
 	font-weight: bold;
+	font-size: 1.2rem;
 }
 
 .icons:hover h4, .icons:hover i {

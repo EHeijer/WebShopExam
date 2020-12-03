@@ -83,14 +83,15 @@
 			<form th:action="@{'/admin-portal/add-product'}" method="post" th:object="${product}">
 				<div class="input-wrapper">
 					<div class="form-group row">
-						<input class="form-control" type="text" placeholder="Product Name" th:field="${product.productName}" /> 
-						<input class="form-control" type="text" placeholder="Brand" th:field="${product.brand}" />
-						<input class="form-control" type="number" placeholder="New Price" th:field="${product.price}"/>
-						<select class="select" th:field="${product.imageUrl}">
+						<input class="form-control" type="text" placeholder="Product Name" th:field="${product.productName}" required/> 
+						<input class="form-control" type="text" placeholder="Brand" th:field="${product.brand}" required/>
+						<input class="form-control" type="number" placeholder="New Price" th:field="${product.price}" required/>
+						<input class="form-control" type="text" placeholder="Shelf Number" th:field="${product.shelfNumber}" required>
+						<select class="select" th:field="${product.imageUrl}" required>
 							<option value="">Choose Image</option>
 							<option th:each="image : ${images}" th:value="${image}" th:utext="${image}"/>
 						</select>
-						<select class="select" th:field="${product.category}">
+						<select class="select" th:field="${product.category}" required>
 							<option value="">Choose Category</option>
 							<option th:value="SUPPLEMENT" >Supplement</option>
 							<option th:value="CLOTHES" >Clothes</option>
