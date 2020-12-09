@@ -45,10 +45,10 @@ public class OrderController {
 		} else {
 		Order order = new Order();
 		User currentUser = userService.getUserAndFetchOrders(authUser.getUserId());
+		order.setUser(currentUser);
 		orderService.addOrder(order);
 		List<OrderLine> orderLines = handleOrderlines(order);
 		order.setOrderLines(orderLines);
-		order.setUser(currentUser);
 		ModelAndView modelAndView = prepareOrderConfirm(order);
 		return modelAndView;
 		}

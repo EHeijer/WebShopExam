@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.edheijer.WebShopExam.models.User;
 import com.edheijer.WebShopExam.security.UserDetailsImpl;
-import com.edheijer.WebShopExam.services.ShoppingCartServiceImpl;
+import com.edheijer.WebShopExam.services.ShoppingCartService;
 import com.edheijer.WebShopExam.services.UserService;
 
 @Controller
@@ -24,7 +24,7 @@ public class UserController {
 	private PasswordEncoder encoder;
 	
 	@Autowired
-	private ShoppingCartServiceImpl shoppingCartService;
+	private ShoppingCartService shoppingCartService;
 	
 	@GetMapping("/customer-profile")
 	public String customerProfile(@AuthenticationPrincipal UserDetailsImpl authUser, Model model) {

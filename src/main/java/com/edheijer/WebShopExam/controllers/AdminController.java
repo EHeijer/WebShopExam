@@ -18,7 +18,7 @@ import com.edheijer.WebShopExam.models.User;
 import com.edheijer.WebShopExam.services.OrderService;
 import com.edheijer.WebShopExam.services.ProductService;
 import com.edheijer.WebShopExam.services.RoleService;
-import com.edheijer.WebShopExam.services.ShoppingCartServiceImpl;
+import com.edheijer.WebShopExam.services.ShoppingCartService;
 import com.edheijer.WebShopExam.services.UserService;
 
 @Controller
@@ -37,7 +37,7 @@ public class AdminController {
 	private ProductService productService;
 	
 	@Autowired
-	private ShoppingCartServiceImpl shoppingCartService;
+	private ShoppingCartService shoppingCartService;
 
 	@GetMapping("/admin-portal/users")
 	public String viewAllUsers(Model model, User user) {

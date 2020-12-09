@@ -1,32 +1,17 @@
-package com.edheijer.WebShopExam.services;
+package com.edheijer.WebShopExam.models;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.context.annotation.SessionScope;
+public class Cart {
 
-import com.edheijer.WebShopExam.models.Product;
-import com.edheijer.WebShopExam.repositories.ProductRepository;
-
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-@Data
-@NoArgsConstructor
-@Service
-@SessionScope
-@Transactional
-public class ShoppingCartServiceImpl implements ShoppingCartService {
+	private Map<Product, Integer> cart;
 	
-	@Autowired
-	private ProductRepository productRepository;
-	
-	private Map<Product, Integer> cart = new HashMap<Product, Integer>();
+	public Cart() {
+		cart  = new HashMap<>();
+	}
 
-	@Override
+
 	public void addProductToCart(Product product) {
 		if(cart.containsKey(product)) {
 			cart.replace(product, cart.get(product) + 1);
@@ -36,7 +21,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
 	}
 
-	@Override
+	
 	public void removeProductfromCart(Product product) {
 		if(cart.containsKey(product)) {
 			if(cart.get(product) > 1) {
@@ -48,12 +33,12 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
 	}
 
-	@Override
+	
 	public Map<Product, Integer> getProductsInCart() {
 		return cart;
 	}
 
-	@Override
+	
 	public double getCartSum() {
 		double cartSum = 0;
 		for(Map.Entry<Product, Integer> entry : cart.entrySet()) {
@@ -63,14 +48,13 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 		return cartSum;
 	}
 	
-	@Override
+	
 	public void incrementQuantity(Product product) {
 		cart.replace(product, cart.get(product) + 1);
 	}
 	
-	@Override
+	
 	public void decrementQuantity(Product product) {
 		cart.replace(product, cart.get(product) - 1);
 	}
-
 }

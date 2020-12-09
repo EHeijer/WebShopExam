@@ -8,13 +8,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.edheijer.WebShopExam.models.Product;
 import com.edheijer.WebShopExam.services.ProductService;
-import com.edheijer.WebShopExam.services.ShoppingCartServiceImpl;
+import com.edheijer.WebShopExam.services.ShoppingCartService;
 
 @Controller
 public class ShoppingCartController {
 	
 	@Autowired
-	private ShoppingCartServiceImpl shoppingCartService;
+	private ShoppingCartService shoppingCartService;
 	
 	@Autowired
 	private ProductService productService;

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.edheijer.WebShopExam.models.Product;
 import com.edheijer.WebShopExam.services.ProductService;
-import com.edheijer.WebShopExam.services.ShoppingCartServiceImpl;
+import com.edheijer.WebShopExam.services.ShoppingCartService;
 
 @Controller
 @RequestMapping
@@ -24,7 +24,7 @@ public class ProductController {
 	private ProductService productService;
 	
 	@Autowired
-	private ShoppingCartServiceImpl shoppingCartService;
+	private ShoppingCartService shoppingCartService;
 	
 	@GetMapping("")
 	public String viewHomePage() {

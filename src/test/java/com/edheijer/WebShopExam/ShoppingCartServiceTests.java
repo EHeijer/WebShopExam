@@ -12,6 +12,8 @@ import com.edheijer.WebShopExam.models.Product;
 import com.edheijer.WebShopExam.models.ProductCategory;
 import com.edheijer.WebShopExam.services.ShoppingCartService;
 
+
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class ShoppingCartServiceTests {

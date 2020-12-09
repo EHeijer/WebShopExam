@@ -17,7 +17,7 @@ import com.edheijer.WebShopExam.repositories.RoleRepository;
 import com.edheijer.WebShopExam.services.UserService;
 
 @Controller
-public class LoginController {
+public class LoginAndRegistrationController {
 	
 	@Autowired
 	private UserService userService;
