@@ -25,7 +25,11 @@
 				</div>
 				<div class="button-container" >
 					<button type="submit" class="btn btn-primary">Register</button>
-				</div>	
+				</div>
+				
+			</div>
+			<div th:if="${usernameExist == true}">
+				<p class="text-danger" style="margin:0; font-weight:bold;">Username already exists</p>
 			</div>
 		</form>
 	</div>

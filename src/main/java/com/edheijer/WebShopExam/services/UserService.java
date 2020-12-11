@@ -44,4 +44,12 @@ public class UserService {
 	public User getUserAndFetchOrders(Long id) {
 		return userRepository.findUserAndFetchOrders(id);
 	}
+	
+	public Boolean usernameAlreadyExists(String username) {
+		return userRepository.existsByUsername(username);
+	}
+	
+	public Boolean emailAlreadyExists(String email) {
+		return userRepository.existsByUsername(email);
+	}
 }

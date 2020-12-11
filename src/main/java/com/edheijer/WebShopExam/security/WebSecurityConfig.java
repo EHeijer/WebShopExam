@@ -72,14 +72,9 @@ public class WebSecurityConfig {
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 				.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class)
 				.antMatcher("/api/**").authorizeRequests()
-				.antMatchers("/api/auth").permitAll()
+				.antMatchers("/api/login").permitAll()
 				.antMatchers("/api/register").permitAll()
 				.antMatchers("/api/employee-actions/**").hasAnyAuthority("ADMIN", "EMPLOYEE");
-//				.antMatchers("/employee-actions/**").hasAnyAuthority("ADMIN", "EMPLOYEE")
-//				.anyRequest().authenticated()
-//				.and().exceptionHandling().accessDeniedPage("/403");
-
-			
 		}
 		
 		@Bean
@@ -132,6 +127,7 @@ public class WebSecurityConfig {
 		@Override
 		public void configure(WebSecurity webSecurity) throws Exception {
 			webSecurity.ignoring().antMatchers("/css/**", "/images/**", "/js/**");
+			webSecurity.ignoring().antMatchers("/favicon.ico", "/resources/**", "/error");
 		}
 
 		@Override
@@ -141,7 +137,6 @@ public class WebSecurityConfig {
 				.antMatchers("/employee-profile/**").hasAnyAuthority("EMPLOYEE","ADMIN")
 				.antMatchers("/customer-profile/**").hasAnyAuthority("CUSTOMER","ADMIN")
 				.antMatchers("/orders-to-handle/**").hasAnyAuthority("EMPLOYEE","ADMIN")
-//				.antMatchers("/employee-actions/**").permitAll()
 				.antMatchers("/register").permitAll()
 				.anyRequest().authenticated()
 				.and()
