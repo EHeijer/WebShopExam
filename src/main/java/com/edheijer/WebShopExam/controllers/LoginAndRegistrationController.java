@@ -34,13 +34,18 @@ public class LoginAndRegistrationController {
 	}
 
 	@GetMapping("/register")
-	public String showRegisterForm(Model model) {
+	public String showRegisterForm(Model model, User user) {
 		model.addAttribute("user", new User());
+		model.addAttribute("usernameExist", userService.usernameAlreadyExists(user.getUsername()));
 		return "register";
 	}
 	
 	@PostMapping("/register")
-	public String userRegistration(User user) {
+	public String userRegistration(User user, Model model) {
+		if(userService.usernameAlreadyExists(user.getUsername())) {
+			model.addAttribute("usernameExist", userService.usernameAlreadyExists(user.getUsername()));
+			return "register";
+		}  
 		String encodedPassword = encoder.encode(user.getPassword());
 		user.setPassword(encodedPassword);
 		user.setEnabled(true);
@@ -52,6 +57,7 @@ public class LoginAndRegistrationController {
 		
 		userService.registerUser(user);
 		return "register_success";
+		
 	}
 	
 

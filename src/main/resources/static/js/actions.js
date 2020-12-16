@@ -55,3 +55,6 @@ function hideRegisterForm() {
 	document.querySelector('.underlying-with-opacity').style.display = 'none';
 	document.querySelector('body').style.overflowY = "visible";
 }
+function notReload(){
+	event.preventDefault();
+}

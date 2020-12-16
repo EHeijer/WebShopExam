@@ -1,5 +1,6 @@
 package com.edheijer.WebShopExam.controllers;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -8,8 +9,10 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -39,6 +42,7 @@ import com.edheijer.WebShopExam.security.SignupRequest;
 import com.edheijer.WebShopExam.security.UserDetailsServiceImpl;
 import com.edheijer.WebShopExam.services.OrderService;
 import com.edheijer.WebShopExam.services.ProductService;
+import com.edheijer.WebShopExam.services.RoleService;
 
 @RestController
 @RequestMapping("/api/")
@@ -69,20 +73,31 @@ public class EmployeeRestController {
 	@Autowired
 	JwtUtils jwtUtils;
 	
-	@PostMapping("auth")
+	@PostMapping("login")
 	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest){
-		Authentication authentication = authenticationManager.authenticate(
-				new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 		
-		SecurityContextHolder.getContext().setAuthentication(authentication);
-		String jwt = jwtUtils.generateJwtToken(authentication);
+		Authentication authentication;
 		
-		UserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getUsername());
-		List<String> roles = userDetails.getAuthorities().stream()
+		 try {
+			 	authentication = authenticationManager.authenticate(
+						new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+	        } catch (BadCredentialsException e) {
+	            return ResponseEntity.badRequest().body("Sorry, we couldn't find an account with that password");
+	        }
+		
+		 SecurityContextHolder.getContext().setAuthentication(authentication);
+		 String jwt = jwtUtils.generateJwtToken(authentication);
+		
+		 UserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getUsername());
+		 List<String> roles = userDetails.getAuthorities().stream()
 				.map(item -> item.getAuthority())
 				.collect(Collectors.toList());
 		
-		return ResponseEntity.ok(new JwtResponse(jwt));
+		 if(roles.contains("ADMIN") || roles.contains("EMPLOYEE")) {
+			return ResponseEntity.ok(new JwtResponse(jwt));
+		 }else {
+			return ResponseEntity.badRequest().body("Your account lacks authorization to sign in here, contact an administrator");
+		 }
 	}
 	
 	@PostMapping("register")
