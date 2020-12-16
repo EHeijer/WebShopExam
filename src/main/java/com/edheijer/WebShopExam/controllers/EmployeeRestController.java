@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
 import com.edheijer.WebShopExam.models.Order;
 import com.edheijer.WebShopExam.models.Product;
 import com.edheijer.WebShopExam.models.Role;
@@ -37,7 +36,6 @@ import com.edheijer.WebShopExam.security.JwtUtils;
 import com.edheijer.WebShopExam.security.LoginRequest;
 import com.edheijer.WebShopExam.security.MessageResponse;
 import com.edheijer.WebShopExam.security.SignupRequest;
-import com.edheijer.WebShopExam.security.UserDetailsImpl;
 import com.edheijer.WebShopExam.security.UserDetailsServiceImpl;
 import com.edheijer.WebShopExam.services.OrderService;
 import com.edheijer.WebShopExam.services.ProductService;
