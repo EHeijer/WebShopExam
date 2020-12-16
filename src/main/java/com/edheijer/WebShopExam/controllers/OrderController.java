@@ -80,7 +80,7 @@ public class OrderController {
 	}
 	
 	@GetMapping(path = "/orders") 
-	public List<Order> getAllOrderLines(){
+	public List<Order> getAllOrders(){
 		return orderService.getAllOrders();
 	}
 }
