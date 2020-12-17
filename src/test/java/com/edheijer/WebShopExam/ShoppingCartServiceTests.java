@@ -76,8 +76,11 @@ public class ShoppingCartServiceTests {
 	public void decrementQuantityTest() {
 		Product product1 = new Product(1L, "Adidas", "adidas shoes", 999.0, "adidas-shoes-png", "p34A", ProductCategory.TRAINING_SHOES);
 		shoppingCartService.addProductToCart(product1);
+		shoppingCartService.incrementQuantity(product1);
+		shoppingCartService.incrementQuantity(product1);
+		shoppingCartService.incrementQuantity(product1);
 		shoppingCartService.decrementQuantity(product1);
 		
-		assertEquals(0, shoppingCartService.getProductsInCart().get(product1));
+		assertEquals(3, shoppingCartService.getProductsInCart().get(product1));
 	}
 }

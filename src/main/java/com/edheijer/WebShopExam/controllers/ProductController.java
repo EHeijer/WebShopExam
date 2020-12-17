@@ -1,6 +1,7 @@
 package com.edheijer.WebShopExam.controllers;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -79,11 +80,14 @@ public class ProductController {
 	}
 	
 	private void editAndUpdate(Long productId, Product product) {
-		Product productToUpdate = productService.findById(productId).get();
-		productToUpdate.setProductName(!product.getProductName().isEmpty() ? product.getProductName() : productToUpdate.getProductName());
-		productToUpdate.setBrand(!product.getBrand().isEmpty() ? product.getBrand() : productToUpdate.getBrand());
-		productToUpdate.setPrice(product.getPrice() != 0D ? product.getPrice() : productToUpdate.getPrice());
-		productService.updateProduct(productId, productToUpdate);
+		Optional<Product> optionalProduct = productService.findById(productId);
+		if(optionalProduct.isPresent()) {
+			Product productToUpdate = optionalProduct.get();
+			productToUpdate.setProductName(!product.getProductName().isEmpty() ? product.getProductName() : productToUpdate.getProductName());
+			productToUpdate.setBrand(!product.getBrand().isEmpty() ? product.getBrand() : productToUpdate.getBrand());
+			productToUpdate.setPrice(product.getPrice() != 0D ? product.getPrice() : productToUpdate.getPrice());
+			productService.updateProduct(productId, productToUpdate);
+		}
 	}
 	
 	@PostMapping("/admin-portal/add-product")
@@ -105,16 +109,22 @@ public class ProductController {
 	}
 	
 	private void setRemovedAndUpdate(Long productId) {
-		Product product = productService.findById(productId).get();
-		product.setRemoved(true);
-		productService.updateProduct(productId, product);
+		Optional<Product> product = productService.findById(productId);
+		if(product.isPresent()) {
+			product.get().setRemoved(true);
+			productService.updateProduct(productId, product.get());
+		}
+		
 	}
 	@GetMapping("/admin-portal/products/addToView/{productId}")
 	public String addProductFromAdminView(@PathVariable("productId") Long productId) {
-		Product product = productService.findById(productId).get();
-		product.setRemoved(false);
-		productService.updateProduct(productId, product);
-		return "redirect:/admin-portal/view-products";
+		Optional<Product> product = productService.findById(productId);
+		if(product.isPresent()) {
+			product.get().setRemoved(false);
+			productService.updateProduct(productId, product.get());
+			return "redirect:/admin-portal/view-products";
+		}
+		return "error-500";
 	}
 	
 	@GetMapping("/search")
