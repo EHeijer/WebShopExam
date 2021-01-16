@@ -1,5 +1,7 @@
 package com.edheijer.WebShopExam.controllers;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,6 +40,7 @@ public class ShoppingCartController {
 	
 	@GetMapping("/shoppingcart/products/{productId}")
 	public String decrementQuantity(@PathVariable("productId") Long productId) {
+
 		ProductDTO product = productService.getById(productId);
 		if(shoppingCartService.getProductsInCart().get(product) <= 1) {
 			shoppingCartService.removeProductfromCart(product);

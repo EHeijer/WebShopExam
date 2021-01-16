@@ -1,15 +1,11 @@
 package com.edheijer.WebShopExam.controllers;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -26,26 +22,16 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.edheijer.WebShopExam.dto.OrderDTO;
 import com.edheijer.WebShopExam.dto.ProductDTO;
 import com.edheijer.WebShopExam.models.Order;
 import com.edheijer.WebShopExam.models.Product;
-import com.edheijer.WebShopExam.models.Role;
-import com.edheijer.WebShopExam.models.RoleEnum;
-import com.edheijer.WebShopExam.models.User;
-import com.edheijer.WebShopExam.repositories.RoleRepository;
-import com.edheijer.WebShopExam.repositories.UserRepository;
 import com.edheijer.WebShopExam.security.JwtResponse;
 import com.edheijer.WebShopExam.security.JwtUtils;
 import com.edheijer.WebShopExam.security.LoginRequest;
-import com.edheijer.WebShopExam.security.MessageResponse;
-import com.edheijer.WebShopExam.security.SignupRequest;
-import com.edheijer.WebShopExam.security.UserDetailsImpl;
 import com.edheijer.WebShopExam.security.UserDetailsServiceImpl;
 import com.edheijer.WebShopExam.services.OrderService;
 import com.edheijer.WebShopExam.services.ProductService;
-import com.edheijer.WebShopExam.services.RoleService;
 
 @RestController
 @RequestMapping("/api/")
@@ -60,12 +46,6 @@ public class EmployeeRestController {
 	
 	@Autowired
 	AuthenticationManager authenticationManager;
-	
-	@Autowired
-	private UserRepository userRepository;
-	
-	@Autowired
-	private RoleRepository roleRepository;
 	
 	@Autowired
 	private UserDetailsServiceImpl userDetailsService;
@@ -102,7 +82,6 @@ public class EmployeeRestController {
 			return ResponseEntity.badRequest().body("Your account lacks authorization to sign in here, contact an administrator");
 		 }
 	}
-	
 	
 	@GetMapping("employee-actions/orders")
 	public List<OrderDTO> getOrderToHandle(){

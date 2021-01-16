@@ -24,11 +24,7 @@ public class Cart {
 	
 	public void removeProductfromCart(Product product) {
 		if(cart.containsKey(product)) {
-			if(cart.get(product) > 1) {
-				cart.replace(product, cart.get(product) - 1);
-			} else if(cart.get(product) == 1) {
-				cart.remove(product);
-			}
+			cart.remove(product);
 		}
 
 	}
@@ -55,6 +51,11 @@ public class Cart {
 	
 	
 	public void decrementQuantity(Product product) {
-		cart.replace(product, cart.get(product) - 1);
+		if(getProductsInCart().get(product) <= 1) {
+			removeProductfromCart(product);
+		}else {
+			cart.replace(product, cart.get(product) - 1);
+		}
+		
 	}
 }

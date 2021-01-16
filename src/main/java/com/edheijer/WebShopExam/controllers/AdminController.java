@@ -1,5 +1,6 @@
 package com.edheijer.WebShopExam.controllers;
 
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,28 +82,41 @@ public class AdminController {
 	
 	@PostMapping("/orders-to-handle/{id}")
 	public String handleOrder(@PathVariable("id") Long id, OrderDTO order) {
-		OrderDTO realOrder = orderMapper.toDto(orderService.findOrderById(id).get());
-		realOrder.setOrderSent(order.isOrderSent());
-		orderService.updateOrder(id, realOrder);
-		return "redirect:/orders-to-handle";
+		Optional<Order> optionalOrder = orderService.findOrderById(id);
+		if(optionalOrder.isPresent()) {
+			OrderDTO realOrder = orderMapper.toDto(orderService.findOrderById(id).get());
+			realOrder.setOrderSent(order.isOrderSent());
+			orderService.updateOrder(id, realOrder);
+			return "redirect:/orders-to-handle";
+		}
+		return "error-500";
 	}
 	
 	@PostMapping("/users/disable/{id}")
 	public String changeUserStatus(@PathVariable("id") Long id) {
-		User userToUpdate = userService.getById(id).get();
-		userToUpdate.setEnabled(userToUpdate.isEnabled() == true ? false : true);
-		userService.updateUser(id, userToUpdate);
-		return "redirect:/admin-portal/users";
+		Optional<User> optionalUser = userService.getById(id);
+		if(optionalUser.isPresent()) {
+			User userToUpdate = optionalUser.get();
+			userToUpdate.setEnabled(userToUpdate.isEnabled() == true ? false : true);
+			userService.updateUser(id, userToUpdate);
+			return "redirect:/admin-portal/users";
+		}
+		return "error-500";
+		
 	}
 	
 	@PostMapping("/users/access-level/{id}")
 	public String changeAccessLevel(@PathVariable("id") Long id, @ModelAttribute("role") Role role) {
-		User userToUpdate = userService.getById(id).get();
-		Role getRole = roleService.getRoleByName(role.getName());
-		Set<Role> userRoles = userToUpdate.getRoles();
-		userRoles.clear();
-		userRoles.add(getRole);
-		userService.updateUser(id, userToUpdate);
-		return "redirect:/admin-portal/users";
+		Optional<User> optionalUser = userService.getById(id);
+		if(optionalUser.isPresent()) {
+			User userToUpdate = optionalUser.get();
+			Role getRole = roleService.getRoleByName(role.getName());
+			Set<Role> userRoles = userToUpdate.getRoles();
+			userRoles.clear();
+			userRoles.add(getRole);
+			userService.updateUser(id, userToUpdate);
+			return "redirect:/admin-portal/users";
+		}
+		return "error-500";
 	}
 }

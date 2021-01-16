@@ -79,7 +79,7 @@ public class UserController {
 	}
 	
 	private void updateUser(UserDetailsImpl authUser, User user) {
-		User userToUpdate = userService.getById(authUser.getUserId()).get();
+		User userToUpdate = userService.getByUserId(authUser.getUserId());
 		userToUpdate.setEmail(user.getEmail() != null ? user.getEmail() : userToUpdate.getEmail());
 		userToUpdate.setUsername(user.getUsername() != null ? user.getUsername() : userToUpdate.getUsername());
 		userToUpdate.setUserOrders(userToUpdate.getUserOrders());
