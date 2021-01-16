@@ -44,7 +44,7 @@
 					<tr th:each="order: ${orders}">
 						<td th:text="${order.id}">User ID</td>
 						<td th:text="${order.dateCreated}">Order Date</td>
-						<td th:text="${order.getTotalOrderPrice()} + ' kr'">Order
+						<td th:text="${order.getOrderSum()} + ' kr'">Order
 							Value</td>
 						<td th:if="${order.isOrderSent() == false}">Waiting To Be
 							Handled</td>

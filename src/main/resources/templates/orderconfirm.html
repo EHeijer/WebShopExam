@@ -26,7 +26,7 @@
                    <p>PRICE</p>
              </div>
            
-			<article class="orderline" th:each="orderLine : ${order.orderLines}">
+			<article class="orderline" th:each="orderLine : ${order.orderLineDTOList}">
 				<img alt="" th:src="@{${'images/' + orderLine.product.imageUrl}}">
 				<div class="orderline-info">
 					<p th:text="${orderLine.product.productName}"
@@ -42,7 +42,7 @@
 			</article>
 			<div class="sum-of-order">
 				<p>Sum:</p>
-				<p th:text="${orderSum} + KR"></p>
+				<p th:text="${order.getOrderSum()} + KR"></p>
 			</div>
 		</div>
 	</div>

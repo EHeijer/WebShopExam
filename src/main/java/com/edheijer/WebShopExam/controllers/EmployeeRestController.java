@@ -27,7 +27,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import com.edheijer.WebShopExam.dto.OrderDTO;
+import com.edheijer.WebShopExam.dto.ProductDTO;
 import com.edheijer.WebShopExam.models.Order;
 import com.edheijer.WebShopExam.models.Product;
 import com.edheijer.WebShopExam.models.Role;
@@ -102,82 +103,30 @@ public class EmployeeRestController {
 		 }
 	}
 	
-	@PostMapping("register")
-	public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signupRequest) {
-//		if(userRepository..existsByUsername(signupRequest.getUsername())) {
-//			return ResponseEntity
-//					.badRequest()
-//					.body(new MessageResponse("Error: Username is already taken!"));
-//		}
-//		
-//		if(userRepository.existsByEmail(signupRequest.getEmail())) {
-//			return ResponseEntity
-//					.badRequest()
-//					.body(new MessageResponse("Error: Email is already in use!"));
-//		}
-		
-		//Create new user's account
-		System.out.println(signupRequest);
-		User user = new User(signupRequest.getUsername(),signupRequest.getEmail(), encoder.encode(signupRequest.getPassword()));
-		
-		Set<String> strRoles = signupRequest.getRole();
-		Set<Role> roles = new HashSet<>();
-		
-		if(strRoles == null) {
-			Role userRole = roleRepository.findByName(RoleEnum.CUSTOMER)
-					.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-			roles.add(userRole);
-		} else {
-			strRoles.forEach(role -> {
-				if(role.equalsIgnoreCase("admin")) {
-					Role adminRole = roleRepository.findByName(RoleEnum.ADMIN)
-							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-					roles.add(adminRole);
-				}else if(role.equalsIgnoreCase("employee")) {
-					Role employeeRole = roleRepository.findByName(RoleEnum.EMPLOYEE)
-							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-					roles.add(employeeRole);
-				}
-				else {
-					Role userRole = roleRepository.findByName(RoleEnum.CUSTOMER)
-							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-					roles.add(userRole);
-				}
-			});
-		}
-		
-		user.setRoles(roles);
-		userRepository.save(user);
-		
-		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
-		
-		
-	}
-	
 	
 	@GetMapping("employee-actions/orders")
-	public List<Order> getOrderToHandle(){
+	public List<OrderDTO> getOrderToHandle(){
 		return orderService.getAllOrders();
 	}
 	
 	
 	@PutMapping(path = "employee-actions/handle-orders/{id}")
-	public void updateOrder(@PathVariable("id") int id, @RequestBody Order order) {
+	public void updateOrder(@PathVariable("id") int id, @RequestBody OrderDTO order) {
 		orderService.updateOrder(Integer.toUnsignedLong(id), order);
 	}
 	
 	@GetMapping("employee-actions/products")
-	public List<Product> getProducts(){
+	public List<ProductDTO> getProducts(){
 		return productService.getAllProducts();
 	}
 	
 	@PutMapping(path = "employee-actions/products/{id}")
-	public void updateProduct(@PathVariable("id") int id, @RequestBody Product product) {
+	public void updateProduct(@PathVariable("id") int id, @RequestBody ProductDTO product) {
 		productService.updateProduct(Integer.toUnsignedLong(id), product);
 	}
 	
 	@PostMapping(path = "employee-actions/products")
-	public void addProduct(@RequestBody Product product) {
+	public void addProduct(@RequestBody ProductDTO product) {
 		productService.addProduct(product);
 	}
 }

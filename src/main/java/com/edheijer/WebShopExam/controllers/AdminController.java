@@ -10,11 +10,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.edheijer.WebShopExam.dto.OrderDTO;
 import com.edheijer.WebShopExam.models.Order;
 import com.edheijer.WebShopExam.models.Product;
 import com.edheijer.WebShopExam.models.Role;
 import com.edheijer.WebShopExam.models.RoleEnum;
 import com.edheijer.WebShopExam.models.User;
+import com.edheijer.WebShopExam.services.OrderMapper;
 import com.edheijer.WebShopExam.services.OrderService;
 import com.edheijer.WebShopExam.services.ProductService;
 import com.edheijer.WebShopExam.services.RoleService;
@@ -38,12 +40,15 @@ public class AdminController {
 	
 	@Autowired
 	private ShoppingCartService shoppingCartService;
+	
+	@Autowired
+	private OrderMapper orderMapper;
 
 	@GetMapping("/admin-portal/users")
 	public String viewAllUsers(Model model, User user) {
-		model.addAttribute("customer", roleService.getRoleByName(RoleEnum.CUSTOMER).get());
-		model.addAttribute("employee", roleService.getRoleByName(RoleEnum.EMPLOYEE).get());
-		model.addAttribute("admin", roleService.getRoleByName(RoleEnum.ADMIN).get());
+		model.addAttribute("customer", roleService.getRoleByName(RoleEnum.CUSTOMER));
+		model.addAttribute("employee", roleService.getRoleByName(RoleEnum.EMPLOYEE));
+		model.addAttribute("admin", roleService.getRoleByName(RoleEnum.ADMIN));
 		model.addAttribute("roles", roleService.getAllRoles());
 		model.addAttribute("role", new Role());
 		model.addAttribute("users", userService.getAllUsers());
@@ -60,22 +65,23 @@ public class AdminController {
 	}
 	
 	@GetMapping("/admin-portal/orderhistory")
-	public String getOrderHistory(Model model, Order order) {
+	public String getOrderHistory(Model model, OrderDTO order) {
 		model.addAttribute("orders", orderService.getAllOrders());
 		model.addAttribute("cartSize", shoppingCartService.getProductsInCart().size());
 		return "orderhistory";
 	}
 	
 	@GetMapping("/orders-to-handle")
-	public String getOrdersToHandle(Model model, Order order) {
+	public String getOrdersToHandle(Model model) {
+		model.addAttribute("order", new OrderDTO());
 		model.addAttribute("orders", orderService.getOrdersToHandle());
 		model.addAttribute("cartSize", shoppingCartService.getProductsInCart().size());
 		return "orders-to-handle";
 	}
 	
 	@PostMapping("/orders-to-handle/{id}")
-	public String handleOrder(@PathVariable("id") Long id, Order order) {
-		Order realOrder = orderService.findOrderById(id).get();
+	public String handleOrder(@PathVariable("id") Long id, OrderDTO order) {
+		OrderDTO realOrder = orderMapper.toDto(orderService.findOrderById(id).get());
 		realOrder.setOrderSent(order.isOrderSent());
 		orderService.updateOrder(id, realOrder);
 		return "redirect:/orders-to-handle";
@@ -92,7 +98,7 @@ public class AdminController {
 	@PostMapping("/users/access-level/{id}")
 	public String changeAccessLevel(@PathVariable("id") Long id, @ModelAttribute("role") Role role) {
 		User userToUpdate = userService.getById(id).get();
-		Role getRole = roleService.getRoleByName(role.getName()).get();
+		Role getRole = roleService.getRoleByName(role.getName());
 		Set<Role> userRoles = userToUpdate.getRoles();
 		userRoles.clear();
 		userRoles.add(getRole);

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.edheijer.WebShopExam.dto.UserDTO;
 import com.edheijer.WebShopExam.models.User;
 import com.edheijer.WebShopExam.security.UserDetailsImpl;
 import com.edheijer.WebShopExam.services.ShoppingCartService;
@@ -28,9 +29,9 @@ public class UserController {
 	
 	@GetMapping("/customer-profile")
 	public String customerProfile(@AuthenticationPrincipal UserDetailsImpl authUser, Model model) {
-		User user = userService.getUserAndFetchOrders(authUser.getUserId());
-		model.addAttribute("user", user);
-		model.addAttribute("orders", user.getUserOrders());
+		UserDTO userDTO = userService.getUserAndFetchOrders(authUser.getUserId());
+		model.addAttribute("user", userDTO);
+		model.addAttribute("orders", userDTO.getOrderDTOList());
 		model.addAttribute("cartSize", shoppingCartService.getProductsInCart().size());
 		return "customer-profile";
 	}

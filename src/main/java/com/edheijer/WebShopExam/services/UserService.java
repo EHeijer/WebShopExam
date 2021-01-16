@@ -1,13 +1,21 @@
 package com.edheijer.WebShopExam.services;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.edheijer.WebShopExam.dto.RoleDTO;
+import com.edheijer.WebShopExam.dto.UserDTO;
+import com.edheijer.WebShopExam.models.Role;
+import com.edheijer.WebShopExam.models.RoleEnum;
 import com.edheijer.WebShopExam.models.User;
+import com.edheijer.WebShopExam.repositories.RoleRepository;
 import com.edheijer.WebShopExam.repositories.UserRepository;
 
 @Service
@@ -17,6 +25,18 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 	
+	@Autowired
+	private RoleRepository roleRepository;
+	
+	@Autowired
+	private UserMapper userMapper;
+	
+	@Autowired
+	private RoleMapper roleMapper;
+	
+	@Autowired
+	private PasswordEncoder encoder;
+	
 	public Optional<User> getByUsername(String username) {
 		return userRepository.findByUsername(username);
 	}
@@ -25,8 +45,19 @@ public class UserService {
 		return userRepository.findById(id);
 	}
 
-	public User registerUser(User user) {
-		return userRepository.saveAndFlush(user);
+	public UserDTO registerUser(UserDTO userDTO) {
+		String encodedPassword = encoder.encode(userDTO.getPassword());
+		userDTO.setPassword(encodedPassword);
+		userDTO.setEnabled(true);
+		
+		Set<RoleDTO> roles = new HashSet<>();
+		Role userRole = roleRepository.findByName(RoleEnum.CUSTOMER);
+		RoleDTO userRoleDTO = roleMapper.toDto(userRole);
+		roles.add(userRoleDTO);
+		userDTO.setRoleDTOList(roles);
+		User user = userMapper.toEntity(userDTO);
+		userRepository.saveAndFlush(user);
+		return userMapper.toDto(user);
 	}
 	
 	public void updateUser(Long id, User user) {
@@ -41,8 +72,9 @@ public class UserService {
 		return userRepository.findAll();
 	}
 	
-	public User getUserAndFetchOrders(Long id) {
-		return userRepository.findUserAndFetchOrders(id);
+	public UserDTO getUserAndFetchOrders(Long id) {
+		User user = userRepository.findUserAndFetchOrders(id);
+		return userMapper.toDto(user);
 	}
 	
 	public Boolean usernameAlreadyExists(String username) {

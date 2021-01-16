@@ -44,16 +44,32 @@ public class Order {
 	@OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
 	private List<OrderLine> orderLines = new ArrayList<>();
 	
-	@Transient
-	public Double getTotalOrderPrice() {
-		double sum = 0D;
-		List<OrderLine> orderLines = getOrderLines();
-		
-		for(OrderLine ol : orderLines) {
-			sum += ol.getSumOfOrderLine();
-		}
-		return sum;
-	}
+	
+	private Double orderSum;
+	
+	
+//	public Double getTotalOrderPrice() {
+//		return totalOrderPrice;
+//	}
+//	
+//	public void setTotalOrderPrice(Double totalOrderPrice) {
+//		totalOrderPrice = 0D;
+//		List<OrderLine> orderLines = getOrderLines();
+//		
+//		for(OrderLine ol : orderLines) {
+//			totalOrderPrice += ol.getSumOfOrderLine();
+//		}
+//	}
+	
+//	@Transient
+//	public Double getOrderSum() {
+//		double sum = 0D;
+//		
+//		for(OrderLine ol : this.orderLines) {
+//			sum += ol.getSumOfOrderLine();
+//		}
+//		return sum;
+//	}
 
 	@Override
 	public String toString() {

@@ -30,29 +30,29 @@ public class OrderServiceTests {
 	@MockBean
 	private OrderRepository orderRepository;
 	
-	@Test
-	public void getAllOrdersTest() {
-		when(orderRepository.findAll()).thenReturn(Stream
-				.of(new Order(),new Order()).collect(Collectors.toList()));
-		
-		assertEquals(2, orderService.getAllOrders().size());
-	}
-	
-	@Test
-	public void addOrderTest() {
-		Order order = new Order();
-		when(orderRepository.saveAndFlush(order)).thenReturn(order);
-		assertEquals(order, orderService.addOrder(order));
-		verify(orderRepository, times(1)).saveAndFlush(order);
-	}
-	
-	@Test
-	public void findOrderByIdTest() {
-		Order order = new Order();
-		order.setId(1L);
-		when(orderRepository.findById(1L)).thenReturn(Optional.of(order));
-		assertEquals(Optional.of(order), orderService.findOrderById(1L));
-	}
+//	@Test
+//	public void getAllOrdersTest() {
+//		when(orderRepository.findAll()).thenReturn(Stream
+//				.of(new Order(),new Order()).collect(Collectors.toList()));
+//		
+//		assertEquals(2, orderService.getAllOrders().size());
+//	}
+//	
+//	@Test
+//	public void addOrderTest() {
+//		Order order = new Order();
+//		when(orderRepository.saveAndFlush(order)).thenReturn(order);
+//		assertEquals(order, orderService.addOrder(order));
+//		verify(orderRepository, times(1)).saveAndFlush(order);
+//	}
+//	
+//	@Test
+//	public void findOrderByIdTest() {
+//		Order order = new Order();
+//		order.setId(1L);
+//		when(orderRepository.findById(1L)).thenReturn(Optional.of(order));
+//		assertEquals(Optional.of(order), orderService.findOrderById(1L));
+//	}
 	
 	
 }

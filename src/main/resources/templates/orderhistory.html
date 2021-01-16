@@ -35,13 +35,13 @@
 					<tr th:each="order: ${orders}">
 						<td th:text="${order.id}">User ID</td>
 						<td th:text="${order.dateCreated}">Order Date</td>
-						<td th:text="${order.getTotalOrderPrice()} + ' kr'">Order
+						<td th:text="${order.orderSum} + ' kr'">Order
 							Value</td>
 						<td th:if="${order.isOrderSent() == false}">Waiting To Be
 							Handled</td>
 						<td th:if="${order.isOrderSent() == true}">Order has been
 							sent</td>
-						<td th:text="${order.user.id}"></td>
+						<td th:text="${order.userId}"></td>
 						<td style="text-align:center;">
 							<i class="fas fa-search-plus" style="font-size:20px;" th:data-thing="${order.id}" th:onclick="showOrder(this.getAttribute('data-thing'));"></i>
 						</td>
@@ -57,7 +57,7 @@
 								<p>QUANTITY</p>
 							</div>	
 							<article class="orderline"
-								th:each="orderLine : ${order.orderLines}">
+								th:each="orderLine : ${order.orderLineDTOList}">
 								<div class=product>
 									<img alt=""
 										th:src="@{${'../images/' + orderLine.product.imageUrl}}">
@@ -76,7 +76,7 @@
 								<hr>
 							</article>
 							<div class="sum">
-								<p th:text="'SUM: ' + ${order.getTotalOrderPrice()}"></p>
+								<p th:text="'SUM: ' + ${order.orderSum}"></p>
 							</div>
 						</div>
 						

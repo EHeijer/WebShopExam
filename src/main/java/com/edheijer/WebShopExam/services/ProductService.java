@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.edheijer.WebShopExam.dto.ProductDTO;
 import com.edheijer.WebShopExam.models.Product;
 import com.edheijer.WebShopExam.models.ProductCategory;
 import com.edheijer.WebShopExam.repositories.ProductRepository;
@@ -20,12 +21,14 @@ public class ProductService {
 	@Autowired
 	private ProductRepository productRepository;
 	
-	public List<Product> getAllProducts() {
-		return productRepository.findAll();
+	@Autowired ProductMapper productMapper;
+	
+	public List<ProductDTO> getAllProducts() {
+		return productMapper.toDto(productRepository.findAll());
 	}
 	
-	public List<Product> getProductsAfterSearching(String searchInput) {
-		List<Product> getProducts = getAllProducts()
+	public List<ProductDTO> getProductsAfterSearching(String searchInput) {
+		List<ProductDTO> getProducts = getAllProducts()
 				.stream()
 				.filter(p -> p.getBrand().toUpperCase().contains(searchInput.toUpperCase()) || p.getProductName().toUpperCase().contains(searchInput.toUpperCase()))
 				.collect(Collectors.toList());
@@ -33,36 +36,36 @@ public class ProductService {
 		return getProducts;		
 	}
 	
-	public List<Product> getAllProductsNotRemoved() {
-		List<Product> productsNotRemoved = getAllProducts()
+	public List<ProductDTO> getAllProductsNotRemoved() {
+		List<ProductDTO> productsNotRemoved = getAllProducts()
 				.stream()
 				.filter(p -> p.isRemoved() == false)
 				.collect(Collectors.toList());
 		return productsNotRemoved;
 	}
 	
-	public List<Product> getAllSupplements() {
-		List<Product> products = getAllProductsNotRemoved();
+	public List<ProductDTO> getAllSupplements() {
+		List<ProductDTO> products = getAllProductsNotRemoved();
 		
-		List<Product> supplements = products
+		List<ProductDTO> supplements = products
 				.stream()
 				.filter(p -> p.getCategory().equals(ProductCategory.SUPPLEMENT)).collect(Collectors.toList());
 		return supplements;
 	}
 	
-	public List<Product> getAllClothes() {
-		List<Product> products = getAllProductsNotRemoved();
+	public List<ProductDTO> getAllClothes() {
+		List<ProductDTO> products = getAllProductsNotRemoved();
 		
-		List<Product> clothes = products
+		List<ProductDTO> clothes = products
 				.stream()
 				.filter(p -> p.getCategory().equals(ProductCategory.CLOTHES)).collect(Collectors.toList());
 		return clothes;
 	}
 	
-	public List<Product> getAllShoes() {
-		List<Product> products = getAllProductsNotRemoved();
+	public List<ProductDTO> getAllShoes() {
+		List<ProductDTO> products = getAllProductsNotRemoved();
 		
-		List<Product> shoes = products
+		List<ProductDTO> shoes = products
 				.stream()
 				.filter(p -> p.getCategory().equals(ProductCategory.TRAINING_SHOES)).collect(Collectors.toList());
 		return shoes;
@@ -78,20 +81,22 @@ public class ProductService {
 		return imageUrls;
 	}
 	
-	public void addProduct(Product product) {
-		productRepository.saveAndFlush(product);
+	public ProductDTO addProduct(ProductDTO productDTO) {
+		Product product = productMapper.toEntity(productDTO);
+		product = productRepository.saveAndFlush(product);
+		return productMapper.toDto(product);
 	}
 	
 	public Optional<Product> findById(Long id) {
 		return productRepository.findById(id);
 	}
 	
-	public Product getById(Long id) {
-		return productRepository.getOne(id);
+	public ProductDTO getById(Long id) {
+		return productMapper.toDto(productRepository.getOne(id));
 	}
 
-	public void updateProduct(Long id, Product product) {
-		productRepository.saveAndFlush(product);
+	public void updateProduct(Long id, ProductDTO productDTO) {
+		productRepository.saveAndFlush(productMapper.toEntity(productDTO));
 	}
 	
 	public void deleteProductById(Long id) {

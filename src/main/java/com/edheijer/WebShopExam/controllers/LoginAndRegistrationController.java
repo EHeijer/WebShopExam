@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.edheijer.WebShopExam.dto.UserDTO;
 import com.edheijer.WebShopExam.models.Role;
 import com.edheijer.WebShopExam.models.RoleEnum;
 import com.edheijer.WebShopExam.models.User;
@@ -34,28 +35,29 @@ public class LoginAndRegistrationController {
 	}
 
 	@GetMapping("/register")
-	public String showRegisterForm(Model model, User user) {
-		model.addAttribute("user", new User());
+	public String showRegisterForm(Model model, UserDTO user) {
+		model.addAttribute("user", new UserDTO());
 		model.addAttribute("usernameExist", userService.usernameAlreadyExists(user.getUsername()));
 		return "register";
 	}
 	
 	@PostMapping("/register")
-	public String userRegistration(User user, Model model) {
+	public String userRegistration(UserDTO user, Model model) {
 		if(userService.usernameAlreadyExists(user.getUsername())) {
 			model.addAttribute("usernameExist", userService.usernameAlreadyExists(user.getUsername()));
 			return "register";
 		}  
-		String encodedPassword = encoder.encode(user.getPassword());
-		user.setPassword(encodedPassword);
-		user.setEnabled(true);
-		
-		Set<Role> roles = new HashSet<>();
-		Role userRole = roleRepository.findByName(RoleEnum.CUSTOMER).get();
-		roles.add(userRole);
-		user.setRoles(roles);
-		
 		userService.registerUser(user);
+//		String encodedPassword = encoder.encode(user.getPassword());
+//		user.setPassword(encodedPassword);
+//		user.setEnabled(true);
+//		
+//		Set<Role> roles = new HashSet<>();
+//		Role userRole = roleRepository.findByName(RoleEnum.CUSTOMER).get();
+//		roles.add(userRole);
+//		user.setRoles(roles);
+//		
+//		userService.registerUser(user);
 		return "register_success";
 		
 	}

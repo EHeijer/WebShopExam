@@ -8,5 +8,5 @@ import com.edheijer.WebShopExam.models.Role;
 import com.edheijer.WebShopExam.models.RoleEnum;
 
 public interface RoleRepository extends JpaRepository<Role, Long>{
-	Optional<Role> findByName(RoleEnum name);
+	Role findByName(RoleEnum name);
 }
