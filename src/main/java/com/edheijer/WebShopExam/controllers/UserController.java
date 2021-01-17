@@ -1,5 +1,7 @@
 package com.edheijer.WebShopExam.controllers;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -58,42 +60,43 @@ public class UserController {
 	}
 	
 	@PostMapping("/customer-profile/edit")
-	public String updateCustomerInfo(@AuthenticationPrincipal UserDetailsImpl authUser,@ModelAttribute("user") User user, Model model) {
+	public String updateCustomerInfo(@AuthenticationPrincipal UserDetailsImpl authUser,@ModelAttribute("user") UserDTO user, Model model) {
 		updateUser(authUser, user);
 		customerProfile(authUser, model);
 		return "redirect:/customer-profile";
 	}
 
 	@PostMapping("/employee-profile/edit")
-	public String updateEmployeeInfo(@AuthenticationPrincipal UserDetailsImpl authUser,@ModelAttribute("user") User user, Model model) {
+	public String updateEmployeeInfo(@AuthenticationPrincipal UserDetailsImpl authUser,@ModelAttribute("user") UserDTO user, Model model) {
 		updateUser(authUser, user);
 		employeeProfile(authUser, model);
 		return "redirect:/employee-profile";
 	}
 	
 	@PostMapping("/admin-profile/edit")
-	public String updateAdminInfo(@AuthenticationPrincipal UserDetailsImpl authUser,@ModelAttribute("user") User user, Model model) {
+	public String updateAdminInfo(@AuthenticationPrincipal UserDetailsImpl authUser,@ModelAttribute("user") UserDTO user, Model model) {
 		updateUser(authUser, user);
 		employeeProfile(authUser, model);
 		return "redirect:/admin-portal/admin-profile";
 	}
 	
-	private void updateUser(UserDetailsImpl authUser, User user) {
-		User userToUpdate = userService.getByUserId(authUser.getUserId());
-		userToUpdate.setEmail(user.getEmail() != null ? user.getEmail() : userToUpdate.getEmail());
-		userToUpdate.setUsername(user.getUsername() != null ? user.getUsername() : userToUpdate.getUsername());
-		userToUpdate.setUserOrders(userToUpdate.getUserOrders());
-		String encodedPassword = "";
-		if(user.getPassword().isEmpty()) {
-			encodedPassword = authUser.getPassword();
-			
-		}else {
-			encodedPassword = encoder.encode(user.getPassword());
+	private void updateUser(UserDetailsImpl authUser, UserDTO user) {
+		Optional<UserDTO> optionalUser = userService.getById(authUser.getUserId());
+		if(optionalUser.isPresent()) {
+			UserDTO userToUpdate = optionalUser.get();
+			userToUpdate.setEmail(user.getEmail() != null ? user.getEmail() : userToUpdate.getEmail());
+			userToUpdate.setUsername(user.getUsername() != null ? user.getUsername() : userToUpdate.getUsername());
+			userToUpdate.setOrderDTOList(userToUpdate.getOrderDTOList());
+			String encodedPassword = "";
+			if(user.getPassword().isEmpty()) {
+				encodedPassword = authUser.getPassword();
+			}else {
+				encodedPassword = encoder.encode(user.getPassword());
+			}
+			userToUpdate.setPassword(encodedPassword);
+			userService.updateUser(userToUpdate.getId(),userToUpdate);
+			authUser.setUsername(userToUpdate.getUsername());
+			authUser.setEmail(userToUpdate.getEmail());
 		}
-		userToUpdate.setPassword(encodedPassword);
-		userService.updateUser(userToUpdate.getId(),userToUpdate);
-		authUser.setUsername(userToUpdate.getUsername());
-		authUser.setEmail(userToUpdate.getEmail());
 	}
-	
 }

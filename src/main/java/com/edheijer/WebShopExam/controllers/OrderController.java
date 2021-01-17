@@ -64,18 +64,6 @@ public class OrderController {
 	private ModelAndView prepareOrderConfirm(OrderDTO orderDTO) {
 		ModelAndView modelAndView = new ModelAndView("/orderconfirm");
 		modelAndView.addObject("order", orderDTO);
-//		Optional<Order> optionalOrder = orderService.findOrderById(orderDTO.getId());
-//		if(optionalOrder.isPresent()) {
-//			Order order = optionalOrder.get();
-			
-//			Double orderSum = 0D;
-//			
-//			for(OrderLineDTO orderLineDTO : orderDTO.getOrderLineDTOList()) {
-//				orderSum += (orderLineDTO.getProduct().getPrice() * orderLineDTO.getQuantity());
-//			}
-//			orderDTO.setOrderSum(orderSum);
-//			modelAndView.addObject("orderSum", orderSum);
-		//}
 		shoppingCartService.clearCart();
 		modelAndView.addObject("cartSize", shoppingCartService.getProductsInCart().size());
 		return modelAndView;

@@ -87,8 +87,9 @@ public class ProductService {
 		return productMapper.toDto(product);
 	}
 	
-	public Optional<Product> findById(Long id) {
-		return productRepository.findById(id);
+	public Optional<ProductDTO> findById(Long id) {
+		return productRepository.findById(id)
+				.map(productMapper::toDto);
 	}
 	
 	public ProductDTO getById(Long id) {

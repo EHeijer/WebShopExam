@@ -41,8 +41,9 @@ public class UserService {
 		return userRepository.findByUsername(username);
 	}
 	
-	public Optional<User> getById(Long id) {
-		return userRepository.findById(id);
+	public Optional<UserDTO> getById(Long id) {
+		return userRepository.findById(id)
+				.map(userMapper::toDto);
 	}
 
 	public UserDTO registerUser(UserDTO userDTO) {
@@ -60,16 +61,16 @@ public class UserService {
 		return userMapper.toDto(user);
 	}
 	
-	public void updateUser(Long id, User user) {
-		userRepository.saveAndFlush(user);
+	public void updateUser(Long id, UserDTO user) {
+		userRepository.saveAndFlush(userMapper.toEntity(user));
 	}
 	
 	public User getByUserId(Long id) {
 		return userRepository.getOne(id);
 	}
 	
-	public List<User> getAllUsers(){
-		return userRepository.findAll();
+	public List<UserDTO> getAllUsers(){
+		return userMapper.toDto(userRepository.findAll());
 	}
 	
 	public UserDTO getUserAndFetchOrders(Long id) {

@@ -43,21 +43,12 @@ public class LoginAndRegistrationController {
 	
 	@PostMapping("/register")
 	public String userRegistration(UserDTO user, Model model) {
+		model.addAttribute("user", new UserDTO());
 		if(userService.usernameAlreadyExists(user.getUsername())) {
 			model.addAttribute("usernameExist", userService.usernameAlreadyExists(user.getUsername()));
 			return "register";
 		}  
 		userService.registerUser(user);
-//		String encodedPassword = encoder.encode(user.getPassword());
-//		user.setPassword(encodedPassword);
-//		user.setEnabled(true);
-//		
-//		Set<Role> roles = new HashSet<>();
-//		Role userRole = roleRepository.findByName(RoleEnum.CUSTOMER).get();
-//		roles.add(userRole);
-//		user.setRoles(roles);
-//		
-//		userService.registerUser(user);
 		return "register_success";
 		
 	}

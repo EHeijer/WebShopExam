@@ -35,9 +35,9 @@
 						<td th:text="${user.id}">User ID</td>
 						<td th:text="${user.username}">Username</td>
 						<td th:text="${user.email}">Email</td>
-						<td th:if="${user.roles.size() == 1 && user.roles.contains(customer)}">Customer</td>
-						<td th:if="${user.roles.contains(employee) && !user.roles.contains(admin)}">Employee</td>
-						<td th:if="${user.roles.contains(admin)}">Admin</td>
+						<td th:if="${user.roleDTOList.size() == 1 && user.roleDTOList.contains(customer)}">Customer</td>
+						<td th:if="${user.roleDTOList.contains(employee) && !user.roleDTOList.contains(admin)}">Employee</td>
+						<td th:if="${user.roleDTOList.contains(admin)}">Admin</td>
 						<td style="display:flex; justify-content:space-around;align-items:center;">
 							<form class="access-form" th:action="@{'/users/access-level/{userId}'(userId=${user.id})}" th:method="post" th:object="${role}">
 								<select th:field="${role.name}">

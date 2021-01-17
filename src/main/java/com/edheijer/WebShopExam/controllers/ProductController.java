@@ -72,9 +72,9 @@ public class ProductController {
 	
 	@GetMapping("/products/{productId}")
 	public String addProductToCart(@PathVariable("productId") Long productId) {
-		Optional<Product> optionalProduct = productService.findById(productId);
+		Optional<ProductDTO> optionalProduct = productService.findById(productId);
 		if(optionalProduct.isPresent()){
-			shoppingCartService.addProductToCart(productMapper.toDto(optionalProduct.get()));
+			shoppingCartService.addProductToCart(optionalProduct.get());
 			
 		}
 		return "redirect:/products";
@@ -94,9 +94,9 @@ public class ProductController {
 	}
 	
 	private void editAndUpdate(Long productId, ProductDTO product) {
-		Optional<Product> optionalProduct = productService.findById(productId);
+		Optional<ProductDTO> optionalProduct = productService.findById(productId);
 		if(optionalProduct.isPresent()) {
-			ProductDTO productToUpdate = productMapper.toDto(optionalProduct.get());
+			ProductDTO productToUpdate = optionalProduct.get();
 			productToUpdate.setProductName(!product.getProductName().isEmpty() ? product.getProductName() : productToUpdate.getProductName());
 			productToUpdate.setBrand(!product.getBrand().isEmpty() ? product.getBrand() : productToUpdate.getBrand());
 			productToUpdate.setPrice(product.getPrice() != 0D ? product.getPrice() : productToUpdate.getPrice());
@@ -123,18 +123,18 @@ public class ProductController {
 	}
 	
 	private void setRemovedAndUpdate(Long productId) {
-		Optional<Product> product = productService.findById(productId);
-		if(product.isPresent()) {
-			ProductDTO productToUpdate = productMapper.toDto(product.get());
+		Optional<ProductDTO> optionalProduct = productService.findById(productId);
+		if(optionalProduct.isPresent()) {
+			ProductDTO productToUpdate = optionalProduct.get();
 			productToUpdate.setRemoved(true);
 			productService.updateProduct(productId, productToUpdate);
 		}
 	}
 	@GetMapping("/admin-portal/products/addToView/{productId}")
 	public String addProductFromAdminView(@PathVariable("productId") Long productId) {
-		Optional<Product> product = productService.findById(productId);
-		if(product.isPresent()) {
-			ProductDTO productToUpdate = productMapper.toDto(product.get());
+		Optional<ProductDTO> optionalProduct = productService.findById(productId);
+		if(optionalProduct.isPresent()) {
+			ProductDTO productToUpdate = optionalProduct.get();
 			productToUpdate.setRemoved(false);
 			productService.updateProduct(productId, productToUpdate);
 			return "redirect:/admin-portal/view-products";
@@ -143,7 +143,8 @@ public class ProductController {
 	}
 	
 	@GetMapping("/search")
-	public String searchProducts(@RequestParam(value = "searchInput") String searchInput, Model model, Product product) {
+	public String searchProducts(@RequestParam(value = "searchInput") String searchInput, Model model) {
+		model.addAttribute("product", new ProductDTO());
 		List<ProductDTO> products = productService.getProductsAfterSearching(searchInput);
 		if(products.isEmpty()) {
 			return "redirect:/products";
